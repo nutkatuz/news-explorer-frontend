@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^12.6.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
     "web-vitals": "^0.2.4"
   },
@@ -16,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./dist/* polzovatel@178.154.246.218:/home/polzovatel/news-frontend"
+    "deploy": "npm run build && scp -r ./build/* teslauser@178.154.228.91:/home/teslauser/news-frontend"
   },
   "eslintConfig": {
     "extends": [
