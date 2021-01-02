@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import PopupWithForm from '../modals/PopupWithForm/PopupWithForm';
 import './App.css';
+import About from '../About/About';
 // Примерный список компонентов, которые вам потребуются:
 // App — корневой компонент приложения, его создаёт CRA;
 // Main, SavedNews — компоненты главной страницы и страницы с сохранёнными карточками;
@@ -19,8 +20,8 @@ import './App.css';
 
 function App() {
   let currentUser
-  const [loggedIn, setLoggedIn] = useState(false);
-  // const [loggedIn, setLoggedIn] = useState(true);
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <BrowserRouter>
@@ -41,6 +42,8 @@ function App() {
         </Route>
       </Switch>
       
+      <About
+      />
       <Footer
       />
 
