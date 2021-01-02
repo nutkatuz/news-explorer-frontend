@@ -23,26 +23,26 @@ function App() {
   return (
     <BrowserRouter>
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="App">      
+    <div className="app">      
       <Header
       />
-        <Switch>
-          <Route exact path='/'>
-            <Main
-            />
-          </Route>
-          <Route path='/saved-news'>
-            <SavedNews
-            />
-          </Route>
-        </Switch>
-        <Footer
-        />
-        <PopupWithForm
-        />
-      <header>
-          Learn React
-      </header>
+
+      <Switch>
+        <Route exact path='/'>
+          <Main
+          />
+        </Route>
+        <Route path='/saved-news'>
+          <SavedNews
+          />
+        </Route>
+      </Switch>
+      
+      <Footer
+      />
+
+      <PopupWithForm
+      />
     </div>
     </CurrentUserContext.Provider>
     </BrowserRouter>
