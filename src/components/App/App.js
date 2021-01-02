@@ -19,12 +19,15 @@ import './App.css';
 
 function App() {
   let currentUser
+  const [loggedIn, setLoggedIn] = useState(false);
+  // const [loggedIn, setLoggedIn] = useState(true);
 
   return (
     <BrowserRouter>
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="app">      
+    <div className='app'>      
       <Header
+      loggedIn={loggedIn}
       />
 
       <Switch>
