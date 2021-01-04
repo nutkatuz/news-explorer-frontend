@@ -1,15 +1,25 @@
 .about {
+  grid-area: content;
   display: grid;
   max-width: 100%;
-  grid-template-columns: .465fr .6fr .01fr;
-  grid-template-rows: 1fr;
+  padding: 80px 0;
+  grid: max-content / minmax(272px, 1fr) 1fr;
   grid-column-gap: 5%;
-  padding: 80px 104px;
-  justify-content: stretch;
+}
+@media screen and (max-width: 1020px) {
+  .about {
+    padding: 40px 0;
+  }
+}
+@media screen and (max-width: 760px) {
+  .about {
+    padding: 30px 0 100px;
+  }
 }
 .about__photo {
   max-width: 100%;
-  width: 100%;
+  align-self: center;
+  justify-self: center;
   margin: 0;
   border-radius: 50%;
   object-fit: cover;
@@ -22,14 +32,20 @@
   font-weight: 400;
 }
 .about__heading {
-  margin: 12px 0;
+  margin: 24px 0 0;
   font-family: 'Roboto Slab';
   font-size: 40px;
   line-height: 46px;
 }
 .about__description {
-  margin: 12px 0;
+  margin: 24px 0 0;
   font-family: 'Roboto';
   font-size: 18px;
   line-height: 24px;
+}
+
+@media screen and (max-width: 760px) {
+  .about {
+    grid: min-content  min-content / auto;
+  }
 }

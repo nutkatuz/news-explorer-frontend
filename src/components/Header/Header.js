@@ -7,19 +7,20 @@ function Header(props) {
     // const authButtonText = `${loggedIn ? 'Грета' : 'Авторизоваться'}`;
 
     return (
+        <div className='indents background'>
         <header className='header'>
             <nav className='navigation'>
                 <div className='navigation__logo'>NewsExplorer</div>
                 <Link to={'/'} className='navigation__link'>Главная</Link>
                 <Link to={'/saved-news'} className='navigation__link'>Сохранённые статьи</Link>
                 <div className='navigation__link'>{loggedIn 
-                ? `Авторизоваться`
-                : (
+                ? (
                     <>
                         <p className='navigation__name'>Грета</p>
                         <div className='navigation__logout'/>
                     </>
-                )}
+                )
+                : `Авторизоваться`}
                 </div>
             </nav>
             <div className='header__content'>
@@ -35,7 +36,9 @@ function Header(props) {
                     <button type='submit' className='search-form__search-button'>Искать</button>
                 </form>
             </div>
+            {/* </div> */}
         </header>
+            </div>
     );
 }
 

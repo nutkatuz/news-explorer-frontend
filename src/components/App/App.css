@@ -1,4 +1,6 @@
 .app {
+  /* max-width: 100%;
+  width: 100%; */
   font-family: 'Roboto Slab', 'Inter', Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -8,4 +10,20 @@
   -ms-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
+}
+
+.indents{
+  display: grid;
+  grid-template-areas: ". content . ";
+  grid-template-columns: 104px auto 104px;
+}
+@media screen and (max-width: 1020px) {
+  .indents {
+      grid-template-columns: 40px auto 40px;
+  }
+}
+@media screen and (max-width: 760px) {
+  .indents {
+      grid-template-columns: 16px auto 16px;
+  }
 }
