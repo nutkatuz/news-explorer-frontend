@@ -20,8 +20,12 @@ import About from '../About/About';
 
 function App() {
   let currentUser
-  // const [loggedIn, setLoggedIn] = useState(false);
+  
   const [loggedIn, setLoggedIn] = useState(true);
+
+  function handleAuthClick () {
+    setLoggedIn(false)
+  }
 
   return (
     <BrowserRouter>
@@ -29,6 +33,7 @@ function App() {
     <div className='app'>      
       <Header
       loggedIn={loggedIn}
+      onAuthClick={handleAuthClick}
       />
 
       <Switch>
