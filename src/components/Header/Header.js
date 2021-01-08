@@ -31,7 +31,7 @@ function Header(props) {
                         {loggedIn 
                         ? (
                             <>
-                                <p className='navigation__name'>Грета</p>
+                                <p className='navigation__name'>Анна Ревидович</p>
                                 <div className='navigation__logout-image'/>
                             </>
                         )
@@ -44,16 +44,14 @@ function Header(props) {
                 <h1 className='header__title'>Что творится в мире?</h1>
                 <p className='header__caption'>Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</p>
                 <form className='search-form'>
-                    <input
+                    <input type='text' 
                         className='search-form__input'
-                        type='text' 
                         placeholder='Введите тему новости'
                         required
                     />
                     <button type='submit' className='search-form__search-button'>Искать</button>
                 </form>
             </div>
-            {/* </div> */}
         </header>
         </div>
     );
