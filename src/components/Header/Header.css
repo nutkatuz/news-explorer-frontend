@@ -36,13 +36,12 @@
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
-    background: rgba(196, 196, 196, 0.01);
-    box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
     background: rgba(196, 196, 196, 1);
+    box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
 }
 .header__logo {
-    margin: 0;
     display: flex;    /* для выравнивания по верт */
+    margin-right: 20px;
     align-items: center;
     text-align: center;
     font-family: Roboto Slab;
@@ -56,16 +55,15 @@
 .navigation {
     width: 100%;
     max-width: 100%;
-    justify-content: end;
     display: grid;
-    grid: 80px / min-content min-content minmax(100px, min-content);
+    grid: 80px / 1fr min-content minmax(100px, max-content);
 }
 .navigation__link {
-    margin: 3px 15px 0;
+    display: block;
+    margin: 32px 15px ;
     padding: 0;
-    display: flex;
     align-items: center;
-    text-align: center;
+    text-align: right;
     text-decoration: none;
     color:#FFF;
     font-family: Roboto;
@@ -77,8 +75,9 @@
 .navigation__link:hover {
     box-shadow: 0 5px 0 #FFF;
 }
-.navigation__link:last-child {
-    width: calc(100% - 20px);  /* ширина кнопки. fit-content не переполнить */
+.navigation__auth-btn {
+    transition: all .5s;
+    width: max-content;  /* ширина кнопки. fit-content не переполнить */
     max-width: 100%;
     display: flex;
     align-items: center;
@@ -89,7 +88,7 @@
     border-radius: 100px;
     cursor: pointer;
 }
-.navigation__link:last-child:hover {
+.navigation__auth-btn:hover {
     box-shadow: 0 0 5px #FFF;
 }
 .navigation__name {
@@ -158,6 +157,7 @@
     margin: 0 24px;
     padding: 0;
     border: none;
+    text-overflow: ellipsis;
     /* overflow: hidden; */
 }
 .search-form__input::placeholder {
@@ -210,18 +210,18 @@
         height: 56px;
         border-radius: 100px;
     }
-    .navigation{
+    .navigation {
         display: grid;
         z-index: -1;
-        grid:  repeat(3, 60px) / 100%;        /* = width: 100%; */
+        grid:  60px 90px 60px / 100%;        /* = width: 100%; */
         max-width: 100%;
     }
     .navigation__link{
-        margin: 0;
-        width: fit-content; 
+        text-align: left;
+        margin: 30px 0 30px 0;
     }
-    .navigation__link:last-child {
-        margin: 0 auto;
+    .navigation__auth-btn {
+        margin: 0px auto;
         min-width: 288px;
         max-width: 100%;
     }
@@ -229,7 +229,7 @@
         box-shadow: none;
         opacity: .8;
     }
-    .navigation__auth-btn{
+    .navigation__auth-name{
         margin: 0 auto;
     }
     body.lock{ /* это что, придется стейт выносить в самый верх ?! позже */
@@ -269,22 +269,25 @@
     .header__menu{
         width: 100%;
         display: grid;
-        grid: 80px 0 / 100%;        /* ????? 100 иначе уедет влево */
+        grid: 56px 0 / 100%;        /* ????? 100 иначе уедет влево */
     }
     .header__menu::before {
         width: calc(100% + 0px);
         padding: 0 14px;
+        top: 56px;
+        background: rgba(196, 196, 196, .1);
     }
     .header__menu.active{
-        grid-template-rows: 80px auto;
+        grid-template-rows: 56px auto;
         position: fixed;
-        top: 0;
         left: 0;
         width: calc(100% - 32px);
         background: #1A1B22;
-        /* background: transparent; */
-        border-radius: 16px;
+        border-radius: 0 0 16px 16px;
         padding: 0 16px 24px;
+    }
+    .header__title.active{
+        padding-top: 56px;
     }
     .header__logo {
         width: 100%;

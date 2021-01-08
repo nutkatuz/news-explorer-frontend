@@ -27,7 +27,7 @@ function Header(props) {
                 <div className='navigation'>
                     <Link to={'/'} className='navigation__link'>Главная</Link>
                     <Link to={'/saved-news'} className='navigation__link'>Сохранённые статьи</Link>
-                    <div className='navigation__link' onClick={onAuthClick}>
+                    <div className='navigation__auth-btn' onClick={onAuthClick}>
                         {loggedIn 
                         ? (
                             <>
@@ -35,13 +35,13 @@ function Header(props) {
                                 <div className='navigation__logout-image'/>
                             </>
                         )
-                        : <p className='navigation__auth-btn'>Авторизоваться</p>}
+                        : <p className='navigation__auth-name'>Авторизоваться</p>}
                     </div>
                 </div>
             </nav>
 
             <div className='header__content'>
-                <h1 className='header__title'>Что творится в мире?</h1>
+                <h1 className={className + ' header__title'} >Что творится в мире?</h1>
                 <p className='header__caption'>Находите самые свежие статьи на любую тему и сохраняйте в своём личном кабинете.</p>
                 <form className='search-form'>
                     <input type='text' 
