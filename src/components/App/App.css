@@ -1,9 +1,14 @@
 .app {
-  /* max-width: 100%;
-  width: 100%; 
-  display: flex;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  justify-content: space-between; 
   flex-direction: column;
-  background: tomato;*/
+  height: 100vh;
+  display: flex;
+  flex-grow: 3;
+  flex-direction: column;
+  background: tomato;
   min-height: 100vh;
   font-family: 'Roboto Slab', 'Inter', Arial, sans-serif;
   font-weight: normal;
@@ -16,18 +21,22 @@
   text-rendering: optimizeLegibility;
 }
 
-.indents{
-  display: grid;
-  grid-template-areas: ". content . ";
-  grid-template-columns: 104px auto 104px;
+.section {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: calc(100% - 104px*2);
 }
-@media screen and (max-width: 1020px) {
-  .indents {
-      grid-template-columns: 40px auto 40px;
+
+@media screen and (max-width: 1020px){
+  .section {
+    max-width: calc(100% - 40px*2);
   }
 }
-@media screen and (max-width: 760px) {
-  .indents {
-      grid-template-columns: 16px auto 16px;
+
+@media screen and (max-width: 760px){
+  .section {
+    max-width: calc(100% - 16px*2);
   }
 }

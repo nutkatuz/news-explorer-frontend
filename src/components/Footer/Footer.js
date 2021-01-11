@@ -9,8 +9,7 @@ const year = new Date().getFullYear()
 function Footer(props) {
 
     return (
-        <div className='indents'>
-        <footer className='footer'>
+        <footer className='section footer'>
             <p className='footer__copyright'>&copy; {year} Supersite, Powered by News API</p>
             <nav className='footer__container'>
                 <div className='footer__links-container'>
@@ -33,7 +32,6 @@ function Footer(props) {
                 </div>
             </nav>
         </footer>
-        </div>
     );
 }
 

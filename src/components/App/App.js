@@ -4,10 +4,10 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Main from '../Main/Main';
 import SavedNews from '../SavedNews/SavedNews';
 import Header from '../Header/Header';
+import About from '../About/About';
 import Footer from '../Footer/Footer';
 import PopupWithForm from '../modals/PopupWithForm/PopupWithForm';
 import './App.css';
-import About from '../About/About';
 // Примерный список компонентов, которые вам потребуются:
 // App — корневой компонент приложения, его создаёт CRA;
 // Main, SavedNews — компоненты главной страницы и страницы с сохранёнными карточками;
@@ -23,39 +23,50 @@ function App() {
   
   const [loggedIn, setLoggedIn] = useState(true);
 
+  // const [loggedIn, setLoggedIn] = useState(false);
+  const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
   function handleAuthClick () {
-    setLoggedIn(false)
+    setLoggedIn(!loggedIn)
+  }
+
+  function handleLoginPopupOpen() {
+    setLoginPopupOpen(true);
+  }
+  function closeAllPopups() {
+    setLoginPopupOpen(false);
   }
 
   return (
     <BrowserRouter>
-    <CurrentUserContext.Provider value={currentUser}>
-    <div className='app'>      
-      <Header
-      loggedIn={loggedIn}
-      onAuthClick={handleAuthClick}
-      />
-
-      <Switch>
-        <Route exact path='/'>
-          <Main
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className='app'>
+          <Header
+            loggedIn={loggedIn}
+            onLogIn={handleLoginPopupOpen}
+            onLogIn={handleAuthClick}
+            onLogOut={handleAuthClick}
           />
-        </Route>
-        <Route path='/saved-news'>
-          <SavedNews
-          />
-        </Route>
-      </Switch>
-      
-      <About
-      />
-      <Footer
-      />
 
-      <PopupWithForm
-      />
-    </div>
-    </CurrentUserContext.Provider>
+          <Switch>
+            <Route exact path='/'>
+              <Main
+              />
+            </Route>
+            <Route path='/saved-news'>
+              <SavedNews
+              />
+            </Route>
+          </Switch>
+          
+          <About
+          />
+          <Footer
+          />
+
+          <PopupWithForm
+          />
+        </div>
+      </CurrentUserContext.Provider>
     </BrowserRouter>
   );
 }

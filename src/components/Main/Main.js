@@ -11,8 +11,9 @@ function Main(props) {
 
     return (
 
-        <>
-        </>
+        <main className='section'>
+            'nj Main!!!!!!!!!!'
+        </main>
     );
 }
 

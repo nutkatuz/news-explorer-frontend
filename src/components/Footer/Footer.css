@@ -1,6 +1,5 @@
 .footer {
-  grid-area: content;
-  max-width: 100%;
+  width: 100%;
   display: flex;
   margin: 0;
   padding: 0;
@@ -14,7 +13,7 @@
   width: 100%;
   display: flex;
   margin: 24px 0;
-  padding-bottom: 24px;
+  padding: 0;
   font-size: 16px;
   line-height: 22px;
   color: #B6BCBF;

@@ -1,0 +1,127 @@
+.header__content {
+  display: flex;
+  width: 608px;
+  padding: 80px 0;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+}
+.header__title {
+  max-width: 100%;
+  margin: 0 auto 0 0;
+  padding: 0 0 32px;
+  font-family: "Roboto Slab", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 60px;
+  line-height: 60px;
+}
+.header__caption {
+  display: flex;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 0 64px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 24px;
+}
+
+.search-form {
+  width: 100%;
+  max-width: 100%;
+  min-height: 64px;
+  background: #fff;
+  display: flex;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  /* font-style: normal;
+    font-weight: normal; */
+  font-size: 16px;
+  line-height: 22px;
+  border-radius: 1000px;
+  /* border: none; */
+}
+.search-form__input {
+  width: 100%;
+  color: #1a1b22;
+  margin: 0 24px;
+  padding: 0;
+  border: none;
+  text-overflow: ellipsis;
+  /* overflow: hidden; */
+}
+.search-form__input::placeholder {
+  color: #b6bcbf;
+}
+.search-form__input:focus {
+  outline: none;
+}
+.search-form__search-button {
+  width: 168px;
+  height: 64px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  background-color: #2f71e5;
+  color: #fff;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  border-radius: 100px;
+  border: none;
+  /* display: none; */
+}
+.search-form__search-button:hover {
+  background-color: #347eff;
+  cursor: pointer;
+}
+.search-form__search-button:active {
+  background-color: #2a65cc;
+}
+.search-form__search-button:focus {
+  outline: none;
+}
+
+@media screen and (max-width: 760px) {
+  .header__content{
+    padding: calc(56px + 30px) 0 ;
+  }
+  .header__title{
+    font-family: Roboto Slab;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 40px;
+
+  }
+  .header__caption{
+    padding: 0 0 122px;
+    align-self: flex-start;
+  }
+  .search-form {
+    flex-direction: column;
+    text-overflow: ellipsis;
+    border-radius: unset;
+    background: transparent;
+  }
+  .search-form__input {
+    width: calc(100% - 32px);
+    height: 56px;
+    padding: 0 16px;
+    margin: 0 0 16px;
+    color: #b6bcbf;
+    background: #fff;
+    border-radius: 100px;
+  }
+  .search-form__search-button {
+    width: 100%;
+    height: 56px;
+    border-radius: 100px;
+  }
+}
