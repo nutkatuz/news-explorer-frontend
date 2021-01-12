@@ -1,5 +1,7 @@
 import React from 'react';
-
+import { useLocation } from 'react-router-dom';
+import NewsCardList from '../NewsCardList/NewsCardList';
+import './Main.css';
 // Navigation — компонент, который отвечает за меню навигации на сайте;
 // SearchForm — форма поиска, куда пользователь будет вводить запрос;
 // NewsCardList — компонент, который управляет отрисовкой карточек на страницу и их количеством;
@@ -9,12 +11,12 @@ import React from 'react';
 
 function Main(props) {
 
-    return (
-
-        <main className='section'>
-            'nj Main!!!!!!!!!!'
-        </main>
-    );
+  return (
+    <main className='main'>
+      а зачем мне мейн ?.......
+      <NewsCardList/>
+    </main>
+  );
 }
 
 export default Main;

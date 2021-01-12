@@ -8,7 +8,6 @@
   display: flex;
   flex-grow: 3;
   flex-direction: column;
-  background: tomato;
   min-height: 100vh;
   font-family: 'Roboto Slab', 'Inter', Arial, sans-serif;
   font-weight: normal;

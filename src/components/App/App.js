@@ -21,9 +21,9 @@ import './App.css';
 function App() {
   let currentUser
   
-  const [loggedIn, setLoggedIn] = useState(true);
+  // const [loggedIn, setLoggedIn] = useState(true);
 
-  // const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [isLoginPopupOpen, setLoginPopupOpen] = useState(false);
   function handleAuthClick () {
     setLoggedIn(!loggedIn)
@@ -59,6 +59,7 @@ function App() {
           </Switch>
           
           <About
+            loggedIn={loggedIn}
           />
           <Footer
           />

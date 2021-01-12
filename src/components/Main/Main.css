@@ -1,0 +1,11 @@
+.main {
+  background: #F5F6F7;
+}
+@media screen and (max-width: 1020px) {
+  .main {
+    width: 100%;
+    min-height: 282px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
