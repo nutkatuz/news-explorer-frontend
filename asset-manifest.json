@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/news-explorer-frontend/static/css/main.de57d70a.chunk.css",
+    "main.js": "/news-explorer-frontend/static/js/main.f65d66a9.chunk.js",
+    "main.js.map": "/news-explorer-frontend/static/js/main.f65d66a9.chunk.js.map",
+    "runtime-main.js": "/news-explorer-frontend/static/js/runtime-main.5522905b.js",
+    "runtime-main.js.map": "/news-explorer-frontend/static/js/runtime-main.5522905b.js.map",
+    "static/js/2.8093822f.chunk.js": "/news-explorer-frontend/static/js/2.8093822f.chunk.js",
+    "static/js/2.8093822f.chunk.js.map": "/news-explorer-frontend/static/js/2.8093822f.chunk.js.map",
+    "index.html": "/news-explorer-frontend/index.html",
+    "static/css/main.de57d70a.chunk.css.map": "/news-explorer-frontend/static/css/main.de57d70a.chunk.css.map",
+    "static/js/2.8093822f.chunk.js.LICENSE.txt": "/news-explorer-frontend/static/js/2.8093822f.chunk.js.LICENSE.txt",
+    "static/media/NewsCard.css": "/news-explorer-frontend/static/media/bin.2f4e9b82.svg",
+    "static/media/Header.css": "/news-explorer-frontend/static/media/logout-icon-white.f8a155bb.svg",
+    "static/media/fb-icon.ce8865e2.svg": "/news-explorer-frontend/static/media/fb-icon.ce8865e2.svg",
+    "static/media/github-icon.8e259964.svg": "/news-explorer-frontend/static/media/github-icon.8e259964.svg",
+    "static/media/image_04.8fede44b.png": "/news-explorer-frontend/static/media/image_04.8fede44b.png",
+    "static/media/image_07.89c0d9f4.png": "/news-explorer-frontend/static/media/image_07.89c0d9f4.png",
+    "static/media/image_08.c08164c6.png": "/news-explorer-frontend/static/media/image_08.c08164c6.png",
+    "static/media/index.css": "/news-explorer-frontend/static/media/sourcesanspro-regular.95f3ed41.woff",
+    "static/media/me.cb9ea566.jpg": "/news-explorer-frontend/static/media/me.cb9ea566.jpg",
+    "static/media/no-result.8fabc218.svg": "/news-explorer-frontend/static/media/no-result.8fabc218.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5522905b.js",
+    "static/js/2.8093822f.chunk.js",
+    "static/css/main.de57d70a.chunk.css",
+    "static/js/main.f65d66a9.chunk.js"
+  ]
+}
