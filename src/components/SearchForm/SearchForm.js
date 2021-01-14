@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import './Search.css';
+import React from 'react';
+import './SearchForm.css';
+// SearchForm — форма поиска, куда пользователь будет вводить запрос;
 
-function Search(props) {
+function SearchForm(props) {
+  const {onSearch} = props;
+
   return (
     <section className='header__content section'>
         <h1 className={'header__title'}>
@@ -16,7 +19,8 @@ function Search(props) {
                 required
             />
             <button type='submit' 
-                    className='search-form__search-button'>
+                    className='search-form__search-button'
+                    onClick={onSearch}>
                     Искать
             </button>
         </form>
@@ -24,4 +28,4 @@ function Search(props) {
   );
 }
 
-export default Search;
+export default SearchForm;

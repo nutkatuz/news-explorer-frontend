@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Search from '../Search/Search';
+import SearchForm from '../SearchForm/SearchForm';
 import './Header.css';
+// Header — компонент, который отрисовывает шапку сайта на страницу;
 
 function Header(props) {
   const {loggedIn, onLogOut, onLogIn} = props;
@@ -63,7 +64,7 @@ function Header(props) {
           }
           </nav>
       </header>
-      <Search/>
+      <SearchForm/>
     </div>
   );
 }

@@ -1,6 +1,9 @@
 import React from 'react';
-import newsCardPhoto from '../../images/me2.jpg';
+import firstCardPhoto from '../../images/image_04.png';
+import secondCardPhoto from '../../images/image_07.png';
+import thirdCardPhoto from '../../images/image_08.png';
 import { useLocation } from 'react-router-dom';
+import './NewsCard.css';
 
 function NewsCard() {
   const { pathname } = useLocation();
@@ -11,9 +14,9 @@ function NewsCard() {
   }`;
 
   return (
-    <section claccName='card section'>
+    <>
       <div className='card__container'>
-        <img className='card__image' alt='Фото статьи' src={newsCardPhoto} />
+        <img className='card__image' alt='Фото статьи' src={firstCardPhoto} />
         {pathname !== '/' && (
           <div className='card__keyword-container'>
             <p className='card__keyword'>Природа</p>
@@ -50,7 +53,7 @@ function NewsCard() {
       </div>
 
       <div className='card__container'>
-        <img className='card__image' alt='Фото статьи' src={newsCardPhoto} />
+        <img className='card__image' alt='Фото статьи' src={secondCardPhoto} />
         {pathname !== '/' && (
           <div className='card__keyword-container'>
             <p className='card__keyword'>Природа</p>
@@ -88,7 +91,7 @@ function NewsCard() {
       </div>
 
       <div className='card__container'>
-        <img className='card__image' alt='Фото статьи' src={newsCardPhoto} />
+        <img className='card__image' alt='Фото статьи' src={thirdCardPhoto} />
         {pathname !== '/' && (
           <div className='card__keyword-container'>
             <p className='card__keyword'>Природа</p>
@@ -125,7 +128,7 @@ function NewsCard() {
         </div>
         <p className='card__sourse'>Лента.ру</p>
       </div>
-    </section>
+      </>
   );
 }
 
