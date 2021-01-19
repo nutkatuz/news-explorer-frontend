@@ -94,7 +94,7 @@ function Register(props) {
         disabled={isButtonSaveDisabled}
         onClick={props.redirect}
       >
-        Зарегестрироваться
+        Зарегистрироваться
       </button>
       <div className="popup__redirect">
         <p className="popup__redirect-paragraph">или</p>

@@ -40,9 +40,7 @@
   color:#B6BCBF;
 }
 .footer__social-icons-container {
-  /* width: calc(20px*2 + 26px); */
   display: flex;
-  /* justify-content: space-between; */
   margin: 0;
   padding: 0;
 }

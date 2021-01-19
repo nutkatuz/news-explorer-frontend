@@ -261,7 +261,19 @@
     top: 0;
     padding: 0 16px 24px;
     max-width: calc(100% );
-    /* width: calc(100% - 32px); */
+  }
+  .header__menu.active::before {
+    content: "";
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    cursor: pointer;
+    /* overflow: hidden; */
+    z-index: -2;
   }
   .header__logo {
     margin: 14px auto 14px 16px;
