@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import NewsCard from '../NewsCard/NewsCard';
-// import Preloader from '../Preloader/Preloader'; // '''''крутися и блочит всё ###
+import Preloader from '../Preloader/Preloader'; // '''''крутися и блочит всё ###
 import noResultImage from '../../images/svg/no-result.svg';
 import './NewsCardList.css';
 // NewsCardList — компонент, который управляет отрисовкой карточек на страницу и их количеством;
@@ -11,7 +11,7 @@ function NewsCardList(props) {
 
   return (
     <div className='card-list'>
-      {/* <Preloader /> */}
+    {pathname === '/' && (
       <section className='no-result'>
         <img
           className='no-result__image'
@@ -23,7 +23,8 @@ function NewsCardList(props) {
           К сожалению по вашему запросу ничего не найдено.
         </p>
       </section>
-
+    )}
+    {pathname === '/' && <Preloader /> }
       {pathname === '/' && (
         <h2 className='card-list__header'>Результаты поиска</h2>
       )}
@@ -31,7 +32,7 @@ function NewsCardList(props) {
         <NewsCard />
       </div>
       {pathname === '/' && (
-        <button className='card-list__show-button'>Показать еще</button>
+        <button className='card-list__button'>Показать еще</button>
       )}
     </div>
   );

@@ -6,6 +6,7 @@ import './Footer.css';
 
 const year = new Date().getFullYear()
 
+// Footer — презентационный компонент, который отрисовывает подвал;
 function Footer(props) {
 
     return (

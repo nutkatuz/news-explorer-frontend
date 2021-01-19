@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './About.css';
 import myPhoto from '../../images/me.jpg'
+// About — презентационный компонент, который показывает информацию об авторе;
 
 function About(props) {
   const {loggedIn} = props;
@@ -8,8 +9,8 @@ function About(props) {
   return (
     <>
     {loggedIn 
-    ?
-    (
+    ?('')
+    :(
     <div className='section'>
       <section className='about'>
         <img className='about__photo' src={myPhoto} alt='Фото Ревидович' />
@@ -23,7 +24,6 @@ function About(props) {
       </section>
     </div>
     )
-    :('')
     }
     </>
   );
