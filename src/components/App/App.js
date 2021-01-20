@@ -16,7 +16,8 @@ function App() {
   // Авторизация:
 
   const [loggedIn, setLoggedIn] = useState(false);
-  const [name, setName] = useState("Анна Ревидович");
+  // const [name, setName] = useState("Анна Ревидович");
+  const name = "Анна Ревидович";
 
   function handleAuthClick() {
     setLoggedIn(!loggedIn);

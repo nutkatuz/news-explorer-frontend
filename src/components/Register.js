@@ -58,6 +58,7 @@ function Register(props) {
           required
           placeholder="Введите почту"
           className="popup__input"
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessageEmail}</span>
         <label className="popup__label">Пароль</label>
@@ -69,6 +70,7 @@ function Register(props) {
           required
           placeholder="Введите пароль"
           className="popup__input"
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessagePassword}</span>
         <label className="popup__label">Имя</label>
@@ -80,6 +82,7 @@ function Register(props) {
           required
           placeholder="Введите свое имя"
           className="popup__input"
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessageName}</span>
       </fieldset>
@@ -94,7 +97,7 @@ function Register(props) {
         disabled={isButtonSaveDisabled}
         onClick={props.redirect}
       >
-        Зарегестрироваться
+        Зарегистрироваться
       </button>
       <div className="popup__redirect">
         <p className="popup__redirect-paragraph">или</p>

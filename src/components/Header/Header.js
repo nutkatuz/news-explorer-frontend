@@ -56,7 +56,7 @@ function Header(props) {
             }
             {loggedIn 
             ? ( 
-            <button arial-label='Выйти из аккаунта'
+            <div
                     className='navbar__auth-btn' 
                     onClick={onLogOut}>
               <p className='navbar__name'>{props.name}
@@ -64,17 +64,16 @@ function Header(props) {
               <div onClick={signinButton} className={pathname === '/' 
               ? 'navbar__logout-image'
               :  `${active + 'navbar__logout-image navbar__logout-image_black'}`} />
-            </button>
+            </div>
             )
             : (
-            <button 
-              arial-label='Авторизоваться' 
+            <div
               className='navbar__auth-btn' 
               onClick={onLogIn}>
                 <p className='navbar__auth-name'>
                   Авторизоваться
                 </p>
-            </button>
+            </div>
             )}
             </nav>
         </header>
