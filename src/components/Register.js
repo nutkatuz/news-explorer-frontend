@@ -58,7 +58,7 @@ function Register(props) {
           required
           placeholder="Введите почту"
           className="popup__input"
-          autoComplete='false'
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessageEmail}</span>
         <label className="popup__label">Пароль</label>
@@ -70,7 +70,7 @@ function Register(props) {
           required
           placeholder="Введите пароль"
           className="popup__input"
-          autoComplete='false'
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessagePassword}</span>
         <label className="popup__label">Имя</label>
@@ -82,7 +82,7 @@ function Register(props) {
           required
           placeholder="Введите свое имя"
           className="popup__input"
-          autoComplete='false'
+          autoComplete='off'
         />
         <span className="popup__error_visible">{errMessageName}</span>
       </fieldset>

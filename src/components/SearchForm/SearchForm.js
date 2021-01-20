@@ -18,12 +18,12 @@ function SearchForm(props) {
                 placeholder='Введите тему новости'
                 required
             />
+            <label className='search-form__label' />
             <button type='submit' 
                     className='search-form__search-button'
                     onClick={onSearch}>
                     Искать
             </button>
-            <label className='search-form__label' />
         </form>
     </section>
   );
