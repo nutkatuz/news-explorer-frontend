@@ -55,13 +55,29 @@
   padding: 0;
   border: none;
   text-overflow: ellipsis;
-  /* overflow: hidden; */
+  z-index: 1;
 }
 .search-form__input::placeholder {
   color: #b6bcbf;
 }
 .search-form__input:focus {
   outline: none;
+}
+.search-form__label {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+  width: calc(100%);
+  height: 60px;
+  z-index: 0;
+  border-radius: 40px;
+}
+.search-form__input:focus ~ .search-form__label {
+  background-color: rgba(0, 255, 255, 0.459);
+  filter: blur(3px);
+  transform: translateY(-210%);
+  border-top: 1px solid #D1D2D6;
+  border-bottom: 1px solid #D1D2D6;
 }
 .search-form__search-button {
   width: 168px;

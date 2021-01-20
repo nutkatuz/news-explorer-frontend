@@ -55,6 +55,7 @@ function Login(props) {
           required
           placeholder="Введите почту"
           className="popup__input"
+          autoComplete='false'
         />
         <span className="popup__error_visible">{errMessageEmail}</span>
         <label className="popup__label">Пароль</label>
@@ -66,6 +67,7 @@ function Login(props) {
           required
           placeholder="Введите пароль"
           className="popup__input"
+          autoComplete='false'
         />
         <span className="popup__error_visible">{errMessagePassword}</span>
       </fieldset>

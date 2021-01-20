@@ -23,6 +23,7 @@ function SearchForm(props) {
                     onClick={onSearch}>
                     Искать
             </button>
+            <label className='search-form__label' />
         </form>
     </section>
   );
