@@ -24,10 +24,10 @@ function Footer(props) {
                 </div>
 
                 <div className='footer__social-icons-container'>
-                    <a className='footer__social-icon' href='https://github.com/' target='blank'>
+                    <a className='footer__social-icon' href='https://github.com/nutkatuz/news-explorer-frontend' target='blank'>
                         <img className='footer__img' src={githubIcon} alt='Иконка Гитхаба' />
                     </a>
-                    <a className='footer__social-icon' href='https://www.facebook.com/' target='blank'>
+                    <a className='footer__social-icon' href='https://www.facebook.com/nutkatuz/' target='blank'>
                         <img className='footer__img' src={facebookIcon} alt='Иконка Фейсбука' />
                     </a>
                 </div>
