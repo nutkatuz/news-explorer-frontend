@@ -1,16 +1,31 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import NewsCard from '../NewsCard/NewsCard';
-import Preloader from '../Preloader/Preloader'; // '''''крутися и блочит всё ###
+import Preloader from '../Preloader/Preloader'; 
 import noResultImage from '../../images/svg/no-result.svg';
 import './NewsCardList.css';
-// NewsCardList — компонент, который управляет отрисовкой карточек на страницу и их количеством;
 
 function NewsCardList(props) {
+  const {isSubmitted, cards} = props;
   const {pathname} = useLocation();
 
   return (
     <div className='card-list'>
+      {pathname === '/' && (
+        <h2 className='card-list__header'>Результаты поиска</h2>
+      )}
+      <ul className='card-list__container'>
+        {
+        isSubmitted
+        ? <Preloader />
+        : cards.map((card, i) => <NewsCard 
+        key={i}
+        {...card} />)
+        }
+      </ul>
+      {pathname === '/' && (
+        <button className='card-list__button'>Показать еще</button>
+      )}
     {pathname === '/' && (
       <section className='no-result'>
         <img
@@ -24,18 +39,10 @@ function NewsCardList(props) {
         </p>
       </section>
     )}
-    {pathname === '/' && <Preloader /> }
-      {pathname === '/' && (
-        <h2 className='card-list__header'>Результаты поиска</h2>
-      )}
-      <div className='card-list__container'>
-        <NewsCard />
-      </div>
-      {pathname === '/' && (
-        <button className='card-list__button'>Показать еще</button>
-      )}
     </div>
   );
 }
 
 export default NewsCardList;
+
+// NewsCardList — компонент, который управляет отрисовкой карточек на страницу и их количеством;

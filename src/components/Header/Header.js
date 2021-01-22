@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import {useLocation, Link} from 'react-router-dom';
 import SearchForm from '../SearchForm/SearchForm';
-import './Header.css';
-// Header — компонент, который отрисовывает шапку сайта на страницу;
-// Navigation — компонент, который отвечает за меню навигации на сайте;
-// SavedNewsHeader — компонент, который выводит на страницу «Сохранённые статьи» информацию о количестве сохранённых карточек, а также о связанных с ними запросах.
 
-function Header(props) {
-  const {loggedIn, onLogOut, onLogIn} = props;
+import './Header.css';
+
+function Header(props) { // const {loggedIn, onLogOut, onLogIn, onSearch} = props;
   const [isActive, setIsActive] = useState(false);
   const { pathname } = useLocation();
   function handleClick() {
@@ -16,7 +13,7 @@ function Header(props) {
   const active = `${isActive ? 'active ' : ''}`;
 
   const signinButton = () => {
-    if (loggedIn) { // пока что вот так (((
+    if (props.loggedIn) { // пока что вот так (((
       props.onOpenLogin(true);
     }
   };
@@ -43,7 +40,7 @@ function Header(props) {
             : 'navbar__link'}>
             Главная
             </Link>
-            {loggedIn 
+            {props.loggedIn 
             ? (
               <Link to={'/saved-news'} 
                     className={pathname === '/saved-news' 
@@ -54,11 +51,11 @@ function Header(props) {
             )
             : ('')
             }
-            {loggedIn 
+            {props.loggedIn 
             ? ( 
             <div
                     className='navbar__auth-btn' 
-                    onClick={onLogOut}>
+                    onClick={props.onLogOut}>
               <p className='navbar__name'>{props.name}
               </p>
               <div onClick={signinButton} className={pathname === '/' 
@@ -69,7 +66,7 @@ function Header(props) {
             : (
             <div
               className='navbar__auth-btn' 
-              onClick={onLogIn}>
+              onClick={props.onLogIn}>
                 <p className='navbar__auth-name'>
                   Авторизоваться
                 </p>
@@ -78,7 +75,14 @@ function Header(props) {
             </nav>
         </header>
 
-        {pathname === '/' && (<SearchForm />)}
+        {pathname === '/' && (
+          <SearchForm 
+          handleSubmit={props.handleSubmit}
+          searchQuery={props.searchQuery}
+          setSearchQuery={props.setSearchQuery}
+          isSubmitted={props.isSubmitted}
+          />)
+        }
 
       </div>
 
@@ -93,3 +97,6 @@ function Header(props) {
 }
 
 export default Header;
+// Header — компонент, который отрисовывает шапку сайта на страницу;
+// Navigation — компонент, который отвечает за меню навигации на сайте;
+// SavedNewsHeader — компонент, который выводит на страницу «Сохранённые статьи» информацию о количестве сохранённых карточек, а также о связанных с ними запросах.

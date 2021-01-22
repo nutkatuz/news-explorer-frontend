@@ -8,7 +8,10 @@ function Main(props) {
 
   return (
     <main className='main'>
-      <NewsCardList/>
+      <NewsCardList
+        isSubmitted={props.isSubmitted}
+        cards = {props.cards}
+      />
       <About 
         loggedIn={props.loggedIn}
       />
