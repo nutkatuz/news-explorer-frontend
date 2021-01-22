@@ -1,4 +1,8 @@
+.card {
+}
+
 .card__container {
+  text-decoration: none;
   position: relative;
   overflow: hidden;
   border-radius: 20px;
