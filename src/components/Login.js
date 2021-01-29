@@ -1,42 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import PopupWithForm from "./PopupWithForm/PopupWithForm";
 
 function Login(props) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [errMessageEmail, setErrMessageEmail] = React.useState("");
-  const [errMessagePassword, setErrMessagePassword] = React.useState("");
-  const [isButtonSaveDisabled, setButtonSaveDisabled] = React.useState(true);
-  const resetForm = () => {
-    setEmail("");
-    setPassword("");
-    setErrMessageEmail("");
-    setErrMessagePassword("");
-  };
+  const [data, setData] = useState( {
+    email: '',
+    password: '',
+    name: ''
+  });
 
-  const handleChangeEmail = (evt) => {
-    setEmail(evt.target.value);
-    setErrMessageEmail("");
-  };
+  function handleChange (e) {
+    const {name, value} = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
 
-  const handleChangePassword = (evt) => {
-    setPassword(evt.target.value);
-    setErrMessagePassword("");
-  };
+  function handleSubmit (e) {
+    e.preventDefault();
+    props.onLogin(data.email, data.password); // в App
+  }
 
-  React.useEffect(() => {
-    if (email && password) {
+  useEffect(() => {
+    if (data.email && data.password) {
       setButtonSaveDisabled(false);
     } else {
       setButtonSaveDisabled(true);
     }
-  }, [handleChangeEmail, handleChangePassword]);
+  }, [handleChange]);
 
-  React.useEffect(() => {
-    if (props.onResetForm) {
-      resetForm();
+  useEffect(() => {
+    if (!props.isOpen) {
+      setData({
+        email: '',
+        password: ''
+      });
     }
-  }, [props.onClose]);
+  }, [props.isOpen]);
+
+// допиши про валидацию
+const [errMessageEmail, setErrMessageEmail] = useState("");
+const [errMessagePassword, setErrMessagePassword] = useState("");
+const [isButtonSaveDisabled, setButtonSaveDisabled] = useState(false);
 
   return (
     <PopupWithForm
@@ -44,13 +49,14 @@ function Login(props) {
       title="Вход"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <fieldset className="popup__form-auth">
         <label className="popup__label">Email</label>
         <input
           type="email"
-          value={email || ""}
-          onChange={handleChangeEmail}
+          value={data.email}
+          onChange={handleChange}
           name="email"
           required
           placeholder="Введите почту"
@@ -61,8 +67,8 @@ function Login(props) {
         <label className="popup__label">Пароль</label>
         <input
           type="password"
-          value={password || ""}
-          onChange={handleChangePassword}
+          value={data.password}
+          onChange={handleChange}
           name="password"
           required
           placeholder="Введите пароль"

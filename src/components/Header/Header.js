@@ -4,19 +4,13 @@ import SearchForm from '../SearchForm/SearchForm';
 
 import './Header.css';
 
-function Header(props) { // const {loggedIn, onLogOut, onLogIn, onSearch} = props;
+function Header(props) {
   const [isActive, setIsActive] = useState(false);
   const { pathname } = useLocation();
   function handleClick() {
       setIsActive(!isActive);
   }
   const active = `${isActive ? 'active ' : ''}`;
-
-  const signinButton = () => {
-    if (props.loggedIn) { // пока что вот так (((
-      props.onOpenLogin(true);
-    }
-  };
 
   return (
     <>
@@ -53,20 +47,18 @@ function Header(props) { // const {loggedIn, onLogOut, onLogIn, onSearch} = prop
             }
             {props.loggedIn 
             ? ( 
-            <div
-                    className='navbar__auth-btn' 
-                    onClick={props.onLogOut}>
+            <div onClick={props.onSignOut} className='navbar__auth-btn'>
               <p className='navbar__name'>{props.name}
               </p>
-              <div onClick={signinButton} className={pathname === '/' 
+              <div className={pathname === '/' 
               ? 'navbar__logout-image'
               :  `${active + 'navbar__logout-image navbar__logout-image_black'}`} />
             </div>
             )
             : (
             <div
-              className='navbar__auth-btn' 
-              onClick={props.onLogIn}>
+              onClick={props.onLogIn}
+              className='navbar__auth-btn' >
                 <p className='navbar__auth-name'>
                   Авторизоваться
                 </p>
@@ -97,6 +89,3 @@ function Header(props) { // const {loggedIn, onLogOut, onLogIn, onSearch} = prop
 }
 
 export default Header;
-// Header — компонент, который отрисовывает шапку сайта на страницу;
-// Navigation — компонент, который отвечает за меню навигации на сайте;
-// SavedNewsHeader — компонент, который выводит на страницу «Сохранённые статьи» информацию о количестве сохранённых карточек, а также о связанных с ними запросах.

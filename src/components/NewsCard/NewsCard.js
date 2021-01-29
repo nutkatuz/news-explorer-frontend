@@ -9,20 +9,22 @@ function NewsCard(props) {
       ? `Войдите, чтобы сохранять статьи`
       : `Убрать из сохранённых`
   }`;
-  // 2 августа, 2019   &emsp;	&#8195;
+
   let date = new Date(props.publishedAt); 
   date = date.toLocaleString("ru", {
     month: 'long',
     day: 'numeric'
   }) + ', ' + date.toLocaleString("ru", {year: 'numeric'}) ;
-
+  
   return (
       <li className='card__container'>
     <a className='сard' to={props.url}>
-        <img className='card__image' alt='Фото статьи' src={props.urlToImage} />
+        <img className='card__image' 
+        alt={props.title} 
+        src={props.urlToImage} />
         {pathname === '/saved-news' && (
           <div className='card__keyword-container'>
-            <p className='card__keyword'>{props.title}</p>
+            <p className='card__keyword'>{props.keyWord}</p>
           </div>
         )}
         <div
@@ -46,7 +48,7 @@ function NewsCard(props) {
         <div className='card__text'>
           <p className='card__date'>{date}</p>
           <p className='card__title'>
-          {props.title}
+          {props.title} 
           </p>
           <p className='card__description'>
           {props.description}

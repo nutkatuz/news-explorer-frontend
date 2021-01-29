@@ -1,45 +1,52 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import PopupWithForm from "./PopupWithForm/PopupWithForm";
 
-
 function Register(props) {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [name, setName] = React.useState("");
-  const [errMessageEmail, setErrMessageEmail] = React.useState("");
-  const [errMessagePassword, setErrMessagePassword] = React.useState("");
-  const [errMessageName, setErrMessageName] = React.useState("");
-  const [isButtonSaveDisabled, setButtonSaveDisabled] = React.useState(false);
+  const [data, setData] = useState( {
+    email: '',
+    password: '',
+    name: ''
+  });
 
-  const resetForm = () => {
-    setEmail("");
-    setPassword("");
-    setName("");
-    setErrMessageEmail("Пример сообщения с сервера");
-    setErrMessagePassword("Сообщение сервера");
-    setErrMessageName("Сообщение сервера");
-  };
+  function handleChange (e) {
+    const {name, value} = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  }
 
-  const handleChangeEmail = (evt) => {
-    setEmail(evt.target.value);
-    setErrMessageEmail("");
-  };
+  function handleSubmit (e) {
+    e.preventDefault();
+    props.onRegister(data.email, data.password, data.name); // в App
+  }
+  
+// допиши про валидацию
+  const [errMessageEmail, setErrMessageEmail] = useState("");
+  const [errMessagePassword, setErrMessagePassword] = useState("");
+  const [errMessageName, setErrMessageName] = useState("");
+  const [isButtonSaveDisabled, setButtonSaveDisabled] = useState(false);
 
-  const handleChangePassword = (evt) => {
-    setPassword(evt.target.value);
-    setErrMessagePassword("");
-  };
-
-  const handleChangeName = (evt) => {
-    setName(evt.target.value);
-    setErrMessageName("");
-  };
-
-  React.useEffect(() => {
-    if (props.onResetForm) {
-      resetForm();
+  useEffect(() => {
+    if (!props.isOpen) {
+      setData({
+        email: '',
+        password: '',
+        name: ''
+      });
+      setErrMessageEmail("");
+      setErrMessagePassword("");
+      setErrMessageName("");
     }
-  }, [props.onClose]);
+  }, [props.isOpen]);
+  
+  useEffect(() => {
+    if (data.email && data.password && data.name) {
+      setButtonSaveDisabled(false);
+    } else {
+      setButtonSaveDisabled(true);
+    }
+  }, [handleChange]);
 
   return (
     <PopupWithForm
@@ -47,14 +54,15 @@ function Register(props) {
       title="Регистрация"
       isOpen={props.isOpen}
       onClose={props.onClose}
+      onSubmit={handleSubmit}
     >
       <fieldset className="popup__form-auth">
         <label className="popup__label">Email</label>
         <input
-          type="email"
-          value={email || ""}
-          onChange={handleChangeEmail}
           name="email"
+          type="email"
+          value={data.email}
+          onChange={handleChange}
           required
           placeholder="Введите почту"
           className="popup__input"
@@ -63,10 +71,10 @@ function Register(props) {
         <span className="popup__error_visible">{errMessageEmail}</span>
         <label className="popup__label">Пароль</label>
         <input
-          type="password"
-          value={password || ""}
-          onChange={handleChangePassword}
           name="password"
+          type="password"
+          value={data.password}
+          onChange={handleChange}
           required
           placeholder="Введите пароль"
           className="popup__input"
@@ -75,10 +83,10 @@ function Register(props) {
         <span className="popup__error_visible">{errMessagePassword}</span>
         <label className="popup__label">Имя</label>
         <input
-          type="text"
-          value={name || ""}
-          onChange={handleChangeName}
           name="name"
+          value={data.name}
+          onChange={handleChange}
+          type="text"
           required
           placeholder="Введите свое имя"
           className="popup__input"
@@ -94,14 +102,12 @@ function Register(props) {
         className={`popup__button-save ${
           isButtonSaveDisabled && "popup__button-save_disabled"
         }`}
-        disabled={isButtonSaveDisabled}
-        onClick={props.redirect}
-      >
+        disabled={isButtonSaveDisabled} >
         Зарегистрироваться
       </button>
       <div className="popup__redirect">
         <p className="popup__redirect-paragraph">или</p>
-        <button className="popup__redirect-link">
+        <button onClick={props.redirect} className="popup__redirect-link">
           Войти
         </button>
       </div>
