@@ -2,7 +2,6 @@ import React from 'react';
 import About from "../About/About";
 import NewsCardList from '../NewsCardList/NewsCardList';
 import './Main.css';
-// Main, SavedNews — компоненты главной страницы и страницы с сохранёнными карточками;
 
 function Main(props) {
 
@@ -11,6 +10,7 @@ function Main(props) {
       <NewsCardList
         isSubmitted={props.isSubmitted}
         cards = {props.cards}
+        keyWord= {props.keyWord}
       />
       <About 
         loggedIn={props.loggedIn}

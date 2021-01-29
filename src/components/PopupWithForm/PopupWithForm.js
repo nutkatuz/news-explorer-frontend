@@ -2,6 +2,7 @@ import React from "react";
 import './PopupWithForm.css';
 
 function PopupWithForm(props) {
+  
   function closeByEsc(evt) {
     if (evt.keyCode === 27) {
       props.onClose();
