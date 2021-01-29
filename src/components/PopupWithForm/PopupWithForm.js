@@ -15,6 +15,7 @@ function PopupWithForm(props) {
     return () => {
       document.removeEventListener("keydown", closeByEsc, false);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -24,7 +24,7 @@ function SearchForm(props) {
             <button 
             type='submit' 
             className='search-form__search-button'
-            handleClick={()=> props.setSearchQuery('')}>
+            onClick={()=> props.setSearchQuery('')}>
               Искать
             </button>
         </form>

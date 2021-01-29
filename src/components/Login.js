@@ -27,6 +27,7 @@ function Login(props) {
     } else {
       setButtonSaveDisabled(true);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleChange]);
 
   useEffect(() => {
@@ -39,8 +40,12 @@ function Login(props) {
   }, [props.isOpen]);
 
 // допиши про валидацию
-const [errMessageEmail, setErrMessageEmail] = useState("");
-const [errMessagePassword, setErrMessagePassword] = useState("");
+const [errMessageEmail, 
+  // setErrMessageEmail
+] = useState("");
+const [errMessagePassword, 
+  // setErrMessagePassword
+] = useState("");
 const [isButtonSaveDisabled, setButtonSaveDisabled] = useState(false);
 
   return (
