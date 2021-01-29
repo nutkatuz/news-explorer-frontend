@@ -11,6 +11,7 @@ import InfoTooltip from "../InfoTooltip";
 import api from '../../utils/NewsApi';
 import * as auth from '../../utils/MainApi';
 import "./App.css";
+import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); //не готов
   const history = useHistory();
 
 
@@ -29,6 +30,7 @@ function App() {
       try {
         const userInfo = await auth.api.getUserData();
         setCurrentUser(userInfo);
+          setName(userInfo.name);
       } catch (err) {
         console.log(`getCurrentUser ${err}`);
       }
@@ -44,7 +46,6 @@ function App() {
           localStorage.setItem('jwt', res.token);
           console.log('Установил токен ' + res.token);
           auth.getUserInfo(res.token)
-          // setName(res.name);
           setLoggedIn(true);
           closeAllPopups();
         }
@@ -114,6 +115,7 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
 
   useEffect(() => {
@@ -220,7 +222,7 @@ function App() {
                 keyWord= {searchQuery}
               />
             </Route>
-            <Route path="/saved-news">
+            <ProtectedRoute path="/saved-news" loggedIn={loggedIn} isRedirect={handleAuthClick}>
               <Header
                 name={name}
                 loggedIn={loggedIn}
@@ -233,7 +235,7 @@ function App() {
                 isSubmitted={isSubmitted}
               />
               <SavedNews name={name} />
-            </Route>
+            </ProtectedRoute>
           </Switch>
           <Footer />
 
@@ -243,6 +245,7 @@ function App() {
           onServerErrorMessage={errorServerMessage}
           redirect={handleRedirect}
           onLogin={handleLogin}
+          loading={isLoading}
         />
         <Register
           isOpen={isOpenRegister}
@@ -250,6 +253,7 @@ function App() {
           onServerErrorMessage={errorServerMessage}
           redirect={handleRedirect}
           onRegister={handleRegister}
+          loading={isLoading}
         />
         <InfoTooltip
           isOpen={isOpenPopupInfo}

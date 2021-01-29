@@ -46,6 +46,7 @@ function Register(props) {
     } else {
       setButtonSaveDisabled(true);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleChange]);
 
   return (

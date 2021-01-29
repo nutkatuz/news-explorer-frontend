@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './NewsCard.css';
 
 function NewsCard(props) {
@@ -18,7 +18,7 @@ function NewsCard(props) {
   
   return (
       <li className='card__container'>
-    <a className='сard' to={props.url}>
+    <a className='сard' href={props.url}>
         <img className='card__image' 
         alt={props.title} 
         src={props.urlToImage} />
