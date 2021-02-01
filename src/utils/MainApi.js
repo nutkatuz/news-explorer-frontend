@@ -1,4 +1,5 @@
-export const BASE_URL = 'https://api.tesla.students.nomoredomains.icu';
+// export const BASE_URL = 'https://api.tesla.students.nomoredomains.icu';
+export const BASE_URL = 'http://localhost:3001';
 
 export const register = (email, password, name) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -91,69 +92,54 @@ class Api {
     .then(this._processingRes)
   }
 
-  getInitialItems() {
-    return fetch(`${this.baseUrl}/cards`, {
+  getSavedNews() {
+    return fetch(`${this.baseUrl}/articles`, {
       headers: this._getHeaders(),
     })
     .then(this._processingRes)
   }
 
-  postItem({name, link}) {
-    return fetch(`${this.baseUrl}/cards`, {
+  saveArticle(article) {
+    const { keyword, title, description, publishedAt, source, url, urlToImage } = article;
+    return fetch(`${this.baseUrl}/articles`, {
       method: 'POST',
       headers: this._getHeaders(),
       body: JSON.stringify({
-        name, link
+        keyword,
+        title,
+        description,
+        publishedAt,
+        source: source.name,
+        url,
+        urlToImage,
       })
     })
     .then(this._processingRes)
   }
 
-  deleteItem(_id) {
-    return fetch(`${this.baseUrl}/cards/${_id}`, {
+  deleteArticle(_id) {
+    return fetch(`${this.baseUrl}/articles/${_id}`, {
       method: 'DELETE',
       headers: this._getHeaders(),
     })
     .then(this._processingRes)
   }
 
-  patchUserAvatar(avatar) {
-    return fetch(`${this.baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._getHeaders(),
-      body: JSON.stringify(avatar)
-    })
-    .then(this._processingRes)
-  }
-
-  patchUserData({name, about}) {
-    return fetch(`${this.baseUrl}/users/me`, {
-      method: 'PATCH',
-      headers: this._getHeaders(),
-      body: JSON.stringify({
-        name,
-        about
-      })
-    })
-    .then(this._processingRes)
-  }
-
-  changeLikeCardStatus(_id, isLiked) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
-        method: `${isLiked ? 'DELETE' : 'PUT'}`,
-        headers: this._getHeaders(),
-        body: JSON.stringify({
-          _id
-        })
-      })
-      .then(this._processingRes)
-  }
+  // changeLikeCardStatus(_id, isLiked) {
+  //   return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+  //       method: `${isLiked ? 'DELETE' : 'PUT'}`,
+  //       headers: this._getHeaders(),
+  //       body: JSON.stringify({
+  //         _id
+  //       })
+  //     })
+  //     .then(this._processingRes)
+  // }
 
 }
 
 export const api = new Api({
-  baseUrl: 'https://api.tesla.students.nomoredomains.icu',
-  // baseUrl: 'https://api.more.students.nomoreparties.xyz',
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json'
   }

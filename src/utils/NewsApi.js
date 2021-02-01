@@ -4,7 +4,6 @@ class Api {
     this._apiKey = apiKey;
     // this._date = new Date(Date.now() - 604800000); Wed Jan 20 2021 02:53:01 GMT+0500 (Екатеринбург, стандартное время) JSON.stringify()
     this._date = new Date(Date.now() - 604800000).toJSON();
-    console.log(this._date)
   }
 
   search(query) {
