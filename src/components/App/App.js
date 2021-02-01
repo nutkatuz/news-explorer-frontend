@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { NewsContext } from "../../contexts/NewsContext";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
@@ -8,164 +9,166 @@ import SavedNews from "../SavedNews/SavedNews";
 import Login from "../Login";
 import Register from "../Register";
 import InfoTooltip from "../InfoTooltip";
-import api from '../../utils/NewsApi';
-import * as auth from '../../utils/MainApi';
+import api from "../../utils/NewsApi";
+import * as auth from "../../utils/MainApi";
 import "./App.css";
 import ProtectedRoute from "../ProtectedRoute";
 
 function App() {
-
-  // объекты
-  const [currentUser, setCurrentUser] = useState({});
-  const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(false); //не готов
-  const history = useHistory();
-
-
+  // Хуки состояния at the top
   // Авторизация:
-    const [name, setName] = useState(null)
+  const [currentUser, setCurrentUser] = useState({});
+  const [name, setName] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const history = useHistory();
+  // Поиск
+  const [cards, setCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false); //не готов
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  // Модальные окна:
+  const [isOpenLogin, setIsOpenLogin] = useState(false);
+  const [isOpenRegister, setIsOpenRegister] = useState(false);
+  const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false); // InfoTooltip
+  const [errorServerMessage, setErrorServerMessage] = useState("");
+  // Карточки  //сохранение статеек в лк
+  const [savedNews, setSavedNews] = React.useState([]);
 
-    async function getCurrentUser() {
-      try {
-        const userInfo = await auth.api.getUserData();
-        setCurrentUser(userInfo);
-          setName(userInfo.name);
-      } catch (err) {
-        console.log(`getCurrentUser ${err}`);
-      }
-    }
-    
   //Auth
+  async function getCurrentUser() {
+    try {
+      const userInfo = await auth.api.getUserData();
+      setCurrentUser(userInfo);
+      setName(userInfo.name);
+    } catch (err) {
+      console.log(`getCurrentUser ${err}`);
+    }
+  }
 
-  function handleLogin (email, password) {
+  function handleLogin(email, password) {
     setIsLoading(true);
-    auth.authorize(email, password)
+    auth
+      .authorize(email, password)
       .then((res) => {
         if (res.token) {
-          localStorage.setItem('jwt', res.token);
-          console.log('Установил токен ' + res.token);
-          auth.getUserInfo(res.token)
+          localStorage.setItem("jwt", res.token);
+          console.log("Установил токен " + res.token);
+          auth.getUserInfo(res.token);
           setLoggedIn(true);
           closeAllPopups();
         }
       })
       .catch((err) => {
         if (err === 400) {
-          console.log('Не передано одно из полей');
+          console.log("Не передано одно из полей");
         } else if (err === 401) {
-          console.log('Неправильные почта или пароль');
+          console.log("Неправильные почта или пароль");
         }
-        console.log('Ошибка логина: ' + err);
-        setLoggedIn(false)
+        console.log("Ошибка логина: " + err);
+        setLoggedIn(false);
       })
-      .finally(() =>{
+      .finally(() => {
         setIsLoading(false);
-      })
+      });
   }
 
   function handleRegister(email, password, name) {
     setIsLoading(true);
-    auth.register(email, password, name)
+    auth
+      .register(email, password, name)
       .then((res) => {
         console.log(res); // при 400 приходит андеф, иначе мыло с _id
         if (res.status !== 400) {
-        setIsOpenRegister(false);
-        setIsOpenPopupInfo(true);
-        } 
+          setIsOpenRegister(false);
+          setIsOpenPopupInfo(true);
+        }
       })
       .catch((err) => {
         if (err.code === 400) {
           console.log(err.message);
         }
-        console.log('Ошибка регистрации: ' + err); // при регистрации не может быть 401
+        console.log("Ошибка регистрации: " + err); // при регистрации не может быть 401
       })
-      .finally(() =>{
+      .finally(() => {
         setIsLoading(false);
-      })
+      });
   }
 
-  function handleLogOut () {
+  function handleLogOut() {
     setLoggedIn(false);
     setName(null);
-    localStorage.removeItem('jwt');
+    localStorage.removeItem("jwt");
+    history.push("/");
   }
 
-  function tokenCheck() { // для того чтобы не регаться каждый раз
-    const token = localStorage.getItem('jwt');
-    console.log('tokenCheck, токен: ' + token);
+  function tokenCheck() {
+    // для того чтобы не регаться каждый раз
+    const token = localStorage.getItem("jwt");
+    console.log("tokenCheck, токен: " + token);
     if (token) {
-      auth.getUserInfo(token)
-        .then((res) => { //res.json()
+      auth
+        .getUserInfo(token)
+        .then((res) => {
+          //res.json()
           if (res) {
             setLoggedIn(true);
             setName(res.name);
-            history.push('/');
           }
         })
         .catch((err) => {
-          console.log('Ошибка проверки tokenCheck: ' + err);
+          console.log("Ошибка проверки tokenCheck: " + err);
           setLoggedIn(false);
-          setName('');
-        })
+          setName("");
+        });
     } else {
-      console.log('нет токена на tokenCheck: ' + token);
+      console.log("нет токена на tokenCheck: " + token);
     }
   }
 
   useEffect(() => {
     tokenCheck();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
 
   useEffect(() => {
     if (!loggedIn) return;
-      getCurrentUser();
+    getCurrentUser();
   }, [loggedIn]);
-  
-  // Карточки
-  // const [cards, setCards] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Поиск
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setCards([]);
     setIsSubmitted(true);
-  }
+  };
 
   React.useEffect(() => {
     if (isSubmitted) {
-      api.search(searchQuery).then(data => {
-        setCards(data.articles.map((item) => ({
-          source: item.source.name,
-          title: item.title,
-          description: item.description,
-          url: item.url,
-          urlToImage: item.urlToImage,
-          publishedAt: item.publishedAt,
-          // author: item.author,
-          // content: item.content,
-        }))
+      api.search(searchQuery)
+      .then((data) => {
+        setCards(
+          data.articles.map((item) => ({
+            source: item.source.name,
+            title: item.title,
+            description: item.description,
+            url: item.url,
+            urlToImage: item.urlToImage,
+            publishedAt: item.publishedAt,
+            // author: item.author,
+            // content: item.content,
+          }))
         );
         setIsSubmitted(false);
-        setSearchQuery('');
-      //   setCards ([{
-      //     link: 'https://i.ytimg.com/vi/pmePvnsl67M/maxresdefault.jpg'
-      //   }]);
-      
+        setSearchQuery("");
       });
     }
   }, [isSubmitted, searchQuery]);
-  
-        // console.log(cards)
 
   // Модальные окна:
-  const [isOpenLogin, setIsOpenLogin] = useState(false);
-  const [isOpenRegister, setIsOpenRegister] = useState(false);
-  const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false); // InfoTooltip
-  const [errorServerMessage, setErrorServerMessage] = useState("");
 
-  function handleAuthClick() { // при нажатии на Авторизоваться
+  function handleAuthClick() {
+    // при нажатии на Авторизоваться
     setIsOpenLogin(true);
   }
 
@@ -174,6 +177,7 @@ function App() {
     setIsOpenRegister(false);
     setIsOpenPopupInfo(false);
   }
+
   function handleOpenLogin() {
     setIsOpenLogin(true);
     setErrorServerMessage("");
@@ -198,69 +202,132 @@ function App() {
     }
   }
 
+  // Карточки  //сохранение статеек в лк
+
+  // React.useEffect(() => {
+  //   const jwt = localStorage.getItem('jwt');
+  //   if (jwt) {
+  //       api.getUserInfo(jwt)
+  //           .then((res) => {
+  //               setLoggedIn(true);
+  //               setCurrentUser(res.data);
+  //               getSavedNews();
+  //           })
+  //           .catch((err) => console.log(err));
+  //   }
+  // }, []);
+
+  // setSavedNews ([{
+  //   keyword:'h',
+  //   title:'h',
+  //   description:'h',
+  //   publishedAt:'h',
+  //   url:'h',
+  //   urlToImage:'h',
+  //   source:'h',
+  // }]);
+
+  //Сoхранение статьи
+
+  function getSavedNews() {
+    auth.api
+        .getSavedNews()
+        .then((news) => setSavedNews(news.data))
+        .catch(err => console.log(`Ошибка при загрузке сохранённых новостей: ${err.message}`));
+};
+
+  function handleArticleSave(article) {
+    if (!loggedIn) return setIsOpenLogin(true);
+    const saved = savedNews.find(
+      (i) => i.publishedAt === article.publishedAt && i.title === article.title
+    );
+    if (!saved) {
+      auth.api
+        .saveArticle(article)
+        .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
+        .catch((err) => console.log(err));
+      return;
+    }
+    handleDeleteArticle(saved);
+  }
+
+  function handleDeleteArticle(article) {
+    auth.api
+      .deleteArticle(article._id)
+      .then(() =>
+        setSavedNews(savedNews.filter((item) => item._id !== article._id))
+      )
+      .catch((err) => console.log(`Ошибка при удалении карточки: ${err}`));
+  }
+
   return (
     <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser}>
-        <div className="app">
-          <Switch>
-            <Route exact path="/">
-              <Header
-                name={name}
+        <NewsContext.Provider value={{ cards, savedNews }}>
+          <div className="app">
+            <Switch>
+              <Route exact path="/">
+                <Header
+                  name={name}
+                  loggedIn={loggedIn}
+                  onLogIn={handleAuthClick}
+                  onOpenLogin={handleOpenLogin}
+                  onSignOut={handleLogOut}
+                  handleSubmit={handleSubmit}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  isSubmitted={isSubmitted}
+                />
+                <Main
+                  loggedIn={loggedIn}
+                  isSubmitted={isSubmitted}
+                  keyWord={searchQuery}
+                />
+              </Route>
+              <ProtectedRoute
+                path="/saved-news"
                 loggedIn={loggedIn}
-                onLogIn={handleAuthClick}
-                onOpenLogin={handleOpenLogin}
-                onSignOut={handleLogOut}
-                handleSubmit={handleSubmit}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                isSubmitted={isSubmitted}
-              />
-              <Main
-                loggedIn={loggedIn}
-                isSubmitted={isSubmitted}
-                cards = {cards}
-                keyWord= {searchQuery}
-              />
-            </Route>
-            <ProtectedRoute path="/saved-news" loggedIn={loggedIn} isRedirect={handleAuthClick}>
-              <Header
-                name={name}
-                loggedIn={loggedIn}
-                onLogIn={handleAuthClick}
-                onOpenLogin={handleOpenLogin}
-                onSignOut={handleLogOut}
-                handleSubmit={handleSubmit}
-                searchQuery={searchQuery}
-                setSearchQuery={setSearchQuery}
-                isSubmitted={isSubmitted}
-              />
-              <SavedNews name={name} />
-            </ProtectedRoute>
-          </Switch>
-          <Footer />
+                isRedirect={handleAuthClick}
+              >
+                <Header
+                  name={name}
+                  loggedIn={loggedIn}
+                  onLogIn={handleAuthClick}
+                  onOpenLogin={handleOpenLogin}
+                  onSignOut={handleLogOut}
+                  handleSubmit={handleSubmit}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                  isSubmitted={isSubmitted}
+                />
+                <SavedNews name={name} />
+              </ProtectedRoute>
+            </Switch>
+            <Footer />
 
-        <Login
-          isOpen={isOpenLogin}
-          onClose={closeAllPopups}
-          onServerErrorMessage={errorServerMessage}
-          redirect={handleRedirect}
-          onLogin={handleLogin}
-          loading={isLoading}
-        />
-        <Register
-          isOpen={isOpenRegister}
-          onClose={closeAllPopups}
-          onServerErrorMessage={errorServerMessage}
-          redirect={handleRedirect}
-          onRegister={handleRegister}
-          loading={isLoading}
-        />
-        <InfoTooltip
-          isOpen={isOpenPopupInfo}
-          onClose={closeAllPopups}
-          redirect={handleRedirect}
-        />
-        </div>
+            <Login
+              isOpen={isOpenLogin}
+              onClose={closeAllPopups}
+              onServerErrorMessage={errorServerMessage}
+              redirect={handleRedirect}
+              onLogin={handleLogin}
+              loading={isLoading}
+            />
+            <Register
+              isOpen={isOpenRegister}
+              onClose={closeAllPopups}
+              onServerErrorMessage={errorServerMessage}
+              redirect={handleRedirect}
+              onRegister={handleRegister}
+              loading={isLoading}
+            />
+            <InfoTooltip
+              isOpen={isOpenPopupInfo}
+              onClose={closeAllPopups}
+              redirect={handleRedirect}
+            />
+          </div>
+        </NewsContext.Provider>
       </CurrentUserContext.Provider>
     </BrowserRouter>
   );

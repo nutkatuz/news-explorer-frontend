@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './SearchForm.css';
 
 function SearchForm(props) {
@@ -23,8 +22,7 @@ function SearchForm(props) {
             <label className='search-form__label' />
             <button 
             type='submit' 
-            className='search-form__search-button'
-            onClick={()=> props.setSearchQuery('')}>
+            className='search-form__search-button'>
               Искать
             </button>
         </form>
@@ -34,7 +32,3 @@ function SearchForm(props) {
 }
 
 export default SearchForm;
-
-// SearchForm — форма поиска, куда пользователь будет вводить запрос;
-//handleChange обработчик события изменений
-  // const {onSearch, searchQuery} = props;

@@ -1,25 +1,88 @@
 .card {
+  position: relative;
+  background-color: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  box-shadow: -1px 1px 10px #b6bcbf, 3px 3px 10px #b6bcbf;
+  transition: all;
+}
+.card__container {
+  height: 100%;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
 }
 
-.card__container {
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-  background-color: #fff;
-  /* display: flex;
-  justify-content: space-between; */
-  padding: 0;
-  list-style: none;
-  margin: 0;
-}
 .card__image {
+  min-height: 140px;
+  max-height: 140px;
   width: 100%;
-  /* height: 272px; */
-  object-position:center;
-  object-fit: contain;
-  object-fit: scale-down;
+  background: url(../../images/image_01.png) center no-repeat;
+  object-position: top;
+  object-fit: fill;
+  overflow: hidden;
 }
+.card__text {
+  margin: 20px 24px 15px;
+  display: flex;
+  flex-direction: column;
+  align-content: space-between;
+}
+.card__date {
+  margin: 0 auto 0 0;
+  font-family: "Source Sans Pro", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 24px;
+  color: #b6bcbf;
+}
+.card__title {
+  margin: 12px 0 0;
+  font-family: "Roboto Slab", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1a1b22;
+}
+.card__description {
+  margin: 16px 0 0;
+  font-family: "Roboto", Arial, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #1a1b22;
+}
+.card__sourse {
+  margin: 10px 0 0;
+  font-family: "Roboto Slab", Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #b6bcbf;
+}
+
 .card__button-container {
   display: flex;
   position: absolute;
@@ -95,80 +158,29 @@
   font-size: 14px;
   line-height: 24px;
   margin: 0 12px;
-  color: #000000;
+  color: #000;
   align-self: center;
 }
-.card__text {
-  /* display: flex;
-  flex-direction: column; */
-  min-height: 230px;
-  margin: 20px 24px 0;
-  color: #1a1b22;
-}
-.card__date {
-  margin: 0 auto 0 0;
-  font-family: "Source Sans Pro", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 18px;
-  line-height: 24px;
-  color: #b6bcbf;
-}
-.card__title {
-  font-family: "Roboto Slab", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 26px;
-  line-height: 30px;
-  margin: 12px auto 0 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card__description {
-  font-family: "Roboto", Arial, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 22px;
-  margin: 16px 0 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.card__sourse {
-  font-family: "Roboto Slab", Arial, sans-serif;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 20px;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-  color: #b6bcbf;
-  margin: 10px 24px 24px;
-}
+
 @media screen and (max-width: 1020px) {
-  /* .card__image {
-    height: 150px;
-  } */
   .card__heading {
     -webkit-line-clamp: 2;
   }
   .card__description {
     -webkit-line-clamp: 3;
   }
-  /* .card__text {
-    min-height: 180px;
-  } */
+  .card__image {
+    min-height: 110px;
+    max-height: 110px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .card__image {
-    height: 196px;
+  .card__title {
+    margin: 10px 0 0;
+    -webkit-line-clamp: 2;
+    font-size: 22px;
+    line-height: 26px;
   }
   .card__button-container {
     top: 16px;
@@ -188,18 +200,5 @@
   .card__keyword-container {
     left: 16px;
     top: 16px;
-  }
-  .card__text {
-    margin: 16px 16px 0;
-    min-height: 184px;
-  }
-  .card__title {
-    margin: 10px auto 0 0;
-    -webkit-line-clamp: 2;
-    font-size: 22px;
-    line-height: 26px;
-  }
-  .card__sourse {
-    margin: auto 16px 16px;
   }
 }

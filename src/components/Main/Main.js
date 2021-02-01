@@ -9,7 +9,6 @@ function Main(props) {
     <main className='main'>
       <NewsCardList
         isSubmitted={props.isSubmitted}
-        cards = {props.cards}
         keyWord= {props.keyWord}
       />
       <About 
