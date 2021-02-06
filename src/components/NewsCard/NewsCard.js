@@ -8,7 +8,7 @@ function NewsCard({loggedIn, onBtnClick, article}) {
   const { savedNews } = useContext(NewsContext);
 
   const {
-    keyWord,
+    keyword,
     title,
     description,
     publishedAt,
@@ -44,14 +44,15 @@ function NewsCard({loggedIn, onBtnClick, article}) {
   const infoText = `${
     pathname === "/"
       ? "Войдите, чтобы сохранять статьи"
-      : isSaved && "Убрать из сохранённых"
+      // : isSaved && "Убрать из сохранённых"
+      : "Убрать из сохранённых"
   }`;
 
   return (
     <li className="card">
       {pathname === "/saved-news" && (
         <div className="card__keyword-container">
-          <p className="card__keyword">{keyWord}</p>
+          <p className="card__keyword">{keyword}</p>
         </div>
       )}
 
@@ -62,9 +63,9 @@ function NewsCard({loggedIn, onBtnClick, article}) {
             : `card__button-container card__button-container_saved-news`
         }
       >
-        <div className="card__button-info-container">
+        {loggedIn && <div className="card__button-info-container">
           <p className="card__button-info">{infoText}</p>
-        </div>
+        </div>}
 
         {pathname === "/" && !isSaved && (
           <div

@@ -1,14 +1,20 @@
-import React from 'react';
-import NewsCardList from '../NewsCardList/NewsCardList';
-
 // Main, SavedNews — компоненты главной страницы и страницы с сохранёнными карточками;
+import React, { useContext } from 'react';
+import NewsCardList from '../NewsCardList/NewsCardList';
+import { NewsContext } from "../../contexts/NewsContext";
 
-function SavedNews(props) {
+const SavedNews = ({ loggedIn, onBtnClick }) => {
+  const { savedNews } = useContext(NewsContext);
+
   return (
-    <>
-      <NewsCardList/>
-    </> 
+      <>
+          <NewsCardList pathname='/saved-news'
+              loggedIn={loggedIn}
+              newsToRender={savedNews}
+              onBtnClick={onBtnClick}
+          />
+      </>
   );
-}
+};
 
 export default SavedNews;
