@@ -14,7 +14,7 @@ function Header(props) {
 
   return (
     <>
-      <div className={pathname === '/' && ('background')}>
+      <div className={pathname === '/' ? ('background') : ''}>
         <header className={pathname === '/' 
         ? 'section header'
         : `${isActive ? 'section header' : 'section header header_black'}`}>

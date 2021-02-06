@@ -7,7 +7,7 @@ class Api {
   }
 
   search(query) {
-    return fetch(`${this._baseUrl}?q=${query}&from=${this._date}&sortBy=publishedAt&pageSize=${this._size}&apiKey=${this._apiKey}`, {
+    return fetch(`${this._baseUrl}?q=${query}&from=${this._date}&sortBy=publishedAt&pageSize=100&apiKey=${this._apiKey}`, {
       // return fetch(`https://newsapi.org/v2/everything?q=bitcoin&apiKey=5d60850ecced411db40f614cd2e175ae`, {
       headers: {
         Authorization: `Client-ID ${this._apiKey}`

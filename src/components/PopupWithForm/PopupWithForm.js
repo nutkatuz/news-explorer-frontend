@@ -21,7 +21,7 @@ function PopupWithForm(props) {
   return (
     <section className={`popup ${props.isOpen && "popup_state_opened"}`}>
       <div className="popup__overlay" onClick={props.onClose}>
-        {" "}
+        {""}
       </div>
       <div className="popup__container">
         <button

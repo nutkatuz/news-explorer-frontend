@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { NewsContext } from "../../contexts/NewsContext";
 import Header from "../Header/Header";
@@ -20,19 +20,17 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [name, setName] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
-  const history = useHistory();
   // Поиск
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(false); //не готов
   const [searchQuery, setSearchQuery] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSearchStarted, setSearchStarted] = useState(false);
   // Модальные окна:
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false); // InfoTooltip
   const [errorServerMessage, setErrorServerMessage] = useState("");
-  // Карточки  //сохранение статеек в лк
-  const [savedNews, setSavedNews] = React.useState([]);
 
   //Auth
   async function getCurrentUser() {
@@ -52,7 +50,7 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
-          console.log("Установил токен " + res.token);
+          // console.log("Установил токен " + res.token);
           auth.getUserInfo(res.token);
           setLoggedIn(true);
           closeAllPopups();
@@ -98,7 +96,6 @@ function App() {
     setLoggedIn(false);
     setName(null);
     localStorage.removeItem("jwt");
-    history.push("/");
   }
 
   function tokenCheck() {
@@ -134,18 +131,33 @@ function App() {
     if (!loggedIn) return;
     getCurrentUser();
   }, [loggedIn]);
+  
+  // Загрузка изначальных карточек
+
+  React.useEffect(() => {
+    const localStorageNews = JSON.parse(localStorage.getItem('news'));
+    if (localStorageNews && localStorageNews.length) {
+        setCards(localStorageNews);
+    }
+  }, []);
 
   // Поиск
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     setCards([]);
     setIsSubmitted(true);
+    // setSearchStarted(true);
   };
 
   React.useEffect(() => {
     if (isSubmitted) {
       api.search(searchQuery)
+      //Если пользователь закрыл вкладку, а после — вернулся на сайт, нужно достать данные из локального хранилища при монтировании компонента App. Выстройте работу с локальным хранилищем и стейт-переменной в правильном порядке.
+      // .then((res) => {
+      //   const news = res.articles.map((item) => ({ ...item, keyword }));
+      //   setCards(news);
+      //   localStorage.setItem('news', JSON.stringify(news));
+      // })
       .then((data) => {
         setCards(
           data.articles.map((item) => ({
@@ -157,18 +169,21 @@ function App() {
             publishedAt: item.publishedAt,
             // author: item.author,
             // content: item.content,
+            keyword: searchQuery,
           }))
         );
+        localStorage.setItem('news', JSON.stringify(cards));
         setIsSubmitted(false);
         setSearchQuery("");
-      });
+        setSearchStarted(true);
+      })
+      .catch((err) => console.log('ошибка поиска'))
     }
   }, [isSubmitted, searchQuery]);
 
   // Модальные окна:
 
-  function handleAuthClick() {
-    // при нажатии на Авторизоваться
+  function handleAuthClick() { // при нажатии на Авторизоваться
     setIsOpenLogin(true);
   }
 
@@ -204,66 +219,11 @@ function App() {
 
   // Карточки  //сохранение статеек в лк
 
-  // React.useEffect(() => {
-  //   const jwt = localStorage.getItem('jwt');
-  //   if (jwt) {
-  //       api.getUserInfo(jwt)
-  //           .then((res) => {
-  //               setLoggedIn(true);
-  //               setCurrentUser(res.data);
-  //               getSavedNews();
-  //           })
-  //           .catch((err) => console.log(err));
-  //   }
-  // }, []);
-
-  // setSavedNews ([{
-  //   keyword:'h',
-  //   title:'h',
-  //   description:'h',
-  //   publishedAt:'h',
-  //   url:'h',
-  //   urlToImage:'h',
-  //   source:'h',
-  // }]);
-
-  //Сoхранение статьи
-
-  function getSavedNews() {
-    auth.api
-        .getSavedNews()
-        .then((news) => setSavedNews(news.data))
-        .catch(err => console.log(`Ошибка при загрузке сохранённых новостей: ${err.message}`));
-};
-
-  function handleArticleSave(article) {
-    if (!loggedIn) return setIsOpenLogin(true);
-    const saved = savedNews.find(
-      (i) => i.publishedAt === article.publishedAt && i.title === article.title
-    );
-    if (!saved) {
-      auth.api
-        .saveArticle(article)
-        .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
-        .catch((err) => console.log(err));
-      return;
-    }
-    handleDeleteArticle(saved);
-  }
-
-  function handleDeleteArticle(article) {
-    auth.api
-      .deleteArticle(article._id)
-      .then(() =>
-        setSavedNews(savedNews.filter((item) => item._id !== article._id))
-      )
-      .catch((err) => console.log(`Ошибка при удалении карточки: ${err}`));
-  }
 
   return (
     <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser}>
-        <NewsContext.Provider value={{ cards, savedNews }}>
+        <NewsContext.Provider value={{ cards }}>
           <div className="app">
             <Switch>
               <Route exact path="/">
@@ -279,6 +239,7 @@ function App() {
                   isSubmitted={isSubmitted}
                 />
                 <Main
+                  isSearchStarted={isSearchStarted}
                   loggedIn={loggedIn}
                   isSubmitted={isSubmitted}
                   keyWord={searchQuery}
