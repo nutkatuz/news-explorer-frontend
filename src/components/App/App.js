@@ -31,6 +31,8 @@ function App() {
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false); // InfoTooltip
   const [errorServerMessage, setErrorServerMessage] = useState("");
+  // Карточки  //сохранение статеек в лк
+  const [savedNews, setSavedNews] = React.useState([]);
 
   //Auth
   async function getCurrentUser() {
@@ -54,6 +56,7 @@ function App() {
           auth.getUserInfo(res.token);
           setLoggedIn(true);
           closeAllPopups();
+          getSavedNews();
         }
       })
       .catch((err) => {
@@ -96,6 +99,8 @@ function App() {
     setLoggedIn(false);
     setName(null);
     localStorage.removeItem("jwt");
+    localStorage.removeItem("news");
+    setSearchStarted(false);
   }
 
   function tokenCheck() {
@@ -130,36 +135,27 @@ function App() {
   useEffect(() => {
     if (!loggedIn) return;
     getCurrentUser();
+    getSavedNews(); // загрузка сохраненок
   }, [loggedIn]);
   
   // Загрузка изначальных карточек
+  //Если пользователь закрыл вкладку, а после — вернулся на сайт, нужно достать данные из локального хранилища при монтировании компонента App. Выстройте работу с локальным хранилищем и стейт-переменной setCards в правильном порядке.
 
   React.useEffect(() => {
     const localStorageNews = JSON.parse(localStorage.getItem('news'));
     if (localStorageNews && localStorageNews.length) {
         setCards(localStorageNews);
+        setSearchStarted(true);
     }
   }, []);
 
   // Поиск
 
-  const handleSubmit = () => {
-    setCards([]);
-    setIsSubmitted(true);
-    // setSearchStarted(true);
-  };
-
   React.useEffect(() => {
     if (isSubmitted) {
       api.search(searchQuery)
-      //Если пользователь закрыл вкладку, а после — вернулся на сайт, нужно достать данные из локального хранилища при монтировании компонента App. Выстройте работу с локальным хранилищем и стейт-переменной в правильном порядке.
-      // .then((res) => {
-      //   const news = res.articles.map((item) => ({ ...item, keyword }));
-      //   setCards(news);
-      //   localStorage.setItem('news', JSON.stringify(news));
-      // })
       .then((data) => {
-        setCards(
+        const news = (
           data.articles.map((item) => ({
             source: item.source.name,
             title: item.title,
@@ -172,14 +168,22 @@ function App() {
             keyword: searchQuery,
           }))
         );
-        localStorage.setItem('news', JSON.stringify(cards));
+        setCards(news);
+        localStorage.setItem('news', JSON.stringify(news));
         setIsSubmitted(false);
         setSearchQuery("");
         setSearchStarted(true);
       })
       .catch((err) => console.log('ошибка поиска'))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted, searchQuery]);
+
+  const handleSubmit = () => {
+    setCards([]);
+    setIsSubmitted(true);
+    // setSearchStarted(true);
+  };
 
   // Модальные окна:
 
@@ -219,11 +223,52 @@ function App() {
 
   // Карточки  //сохранение статеек в лк
 
+  function getSavedNews() {
+    auth.api
+        .getSavedNews()
+        .then((news) => 
+          // console.log(news)
+          setSavedNews(news)
+// date: "2016-09-18T17:34:02.666Z"
+// image: "https://i.pinimg.com/564x/eb/01/78/eb01788546b8c8eab15485970ce0e3b9.jpg"
+// keyword: "статья"
+// link: "http://jj.com"
+// source: "источник"
+// text: "текст"
+// title: "заголовок"
+// _id: "5fe1b4d3fc763d12488892ee"
+        )
+        .catch(err => console.log(`Ошибка getSavedNews: ${err.message}`));
+};
+
+  function handleArticleSave(article) {
+    if (!loggedIn) return setIsOpenLogin(true);
+    const saved = savedNews.find(
+      (i) => i.publishedAt === article.publishedAt && i.title === article.title
+    );
+    if (!saved) {
+      auth.api
+        .saveArticle(article)
+        .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
+        .catch(err => console.log(`Ошибка handleArticleSave: ${err.message}`));
+      return;
+    }
+    handleDeleteArticle(saved);
+  }
+
+  function handleDeleteArticle(article) {
+    auth.api
+      .deleteArticle(article._id)
+      .then(() =>
+        setSavedNews(savedNews.filter((item) => item._id !== article._id))
+      )
+      .catch((err) => console.log(`Ошибка handleDeleteArticle: ${err}`));
+  }
 
   return (
     <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser}>
-        <NewsContext.Provider value={{ cards }}>
+        <NewsContext.Provider value={{ cards, savedNews }}>
           <div className="app">
             <Switch>
               <Route exact path="/">
@@ -243,6 +288,7 @@ function App() {
                   loggedIn={loggedIn}
                   isSubmitted={isSubmitted}
                   keyWord={searchQuery}
+                  onBtnClick={handleArticleSave}
                 />
               </Route>
               <ProtectedRoute
