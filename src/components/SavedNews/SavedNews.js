@@ -10,8 +10,8 @@ const SavedNews = ({ loggedIn, onBtnClick }) => {
       <>
           <NewsCardList pathname='/saved-news'
               loggedIn={loggedIn}
-              newsToRender={savedNews}
               onBtnClick={onBtnClick}
+              cards = {savedNews}
           />
       </>
   );

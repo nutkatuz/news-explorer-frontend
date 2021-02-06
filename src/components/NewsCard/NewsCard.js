@@ -108,3 +108,7 @@ function NewsCard({loggedIn, onBtnClick, article}) {
 }
 
 export default NewsCard;
+// {
+//   link: url,
+//   image: urlToImage,
+// }

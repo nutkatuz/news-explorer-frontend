@@ -310,12 +310,8 @@ function App() {
                   isSubmitted={isSubmitted}
                 />
                 <SavedNews
-                  isSearchStarted={isSearchStarted}
                   loggedIn={loggedIn}
-                  isSubmitted={isSubmitted}
-                  keyWord={searchQuery}
                   onBtnClick={handleBtnClick}
-                  name={name}
                 />
               </ProtectedRoute>
             </Switch>

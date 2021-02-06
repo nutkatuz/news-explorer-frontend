@@ -1,20 +1,19 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useLocation } from "react-router-dom";
-import { NewsContext } from "../../contexts/NewsContext";
 import NewsCard from "../NewsCard/NewsCard";
 import Preloader from "../Preloader/Preloader";
 import noResultImage from "../../images/svg/no-result.svg";
 import "./NewsCardList.css";
 
-function NewsCardList({isSubmitted, onBtnClick, loggedIn }) {
+function NewsCardList({isSubmitted, onBtnClick, loggedIn, cards }) {
     const { pathname } = useLocation();
 
   //количество отрисованных карточек 3
 
   const [currentRow, setCurrentRow] = React.useState(0);
-  const { cards } = useContext(NewsContext);
 
   const trinityCards = cards.slice(0, (currentRow + 1) * 3);
+  
   function handleShowMore() {
     setCurrentRow(currentRow + 1);
   }
@@ -45,7 +44,9 @@ function NewsCardList({isSubmitted, onBtnClick, loggedIn }) {
             ))}
           </ul>
 
-          {pathname === "/" && cards.length !== trinityCards.length && (
+          {
+          // pathname === "/" &&  -сохраненки показывать тоже с кнопкой
+          cards.length !== trinityCards.length && (
             <button onClick={handleShowMore} className="card-list__button">
               Показать еще
             </button>
