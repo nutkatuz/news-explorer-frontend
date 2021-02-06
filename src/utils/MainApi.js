@@ -106,18 +106,9 @@ class Api {
       description,
       publishedAt,
       source,
-      // source: source.name,
       url,
       urlToImage,
       } = article;
-//     1cb70b2fdfb8aec4932fa4.jpg", …}
-// description: "Врачи-диетологи составили список полезных каш, которые подойдут для утренней трапезы. По словам экспертов, гречневая каша богата клетчаткой, витаминами Е, РР, В1, В2 и фолиевыми и органическими кислотами. Это блюдо называют одним из самых полезных для завтрак…"
-// keyword: "рр"
-// publishedAt: "2021-02-02T10:06:09Z"
-// source: "Lenta"
-// title: "Диетологи назвали самые полезные каши на завтрак"
-// url: "https://lenta.ru/news/2021/02/02/kashka/"
-// urlToImage: "https://icdn.lenta.ru/images/2021/02/02/12/20210202123343634/share_9098429e8f1cb70b2fdfb8aec4932fa4.jpg"
 
     return fetch(`${this.baseUrl}/articles`, {
       method: 'POST',
@@ -125,11 +116,11 @@ class Api {
       body: JSON.stringify({
         keyword,
         title,
-        text: description,
-        date: publishedAt,
+        description,
+        publishedAt,
         source,
-        link: url,
-        image: urlToImage,
+        url,
+        urlToImage,
       })
     })
     .then(this._processingRes)
