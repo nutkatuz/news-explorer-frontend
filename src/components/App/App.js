@@ -137,15 +137,15 @@ function App() {
     getCurrentUser();
     getSavedNews(); // загрузка сохраненок
   }, [loggedIn]);
-  
+
   // Загрузка изначальных карточек
   //Если пользователь закрыл вкладку, а после — вернулся на сайт, нужно достать данные из локального хранилища при монтировании компонента App. Выстройте работу с локальным хранилищем и стейт-переменной setCards в правильном порядке.
 
   React.useEffect(() => {
-    const localStorageNews = JSON.parse(localStorage.getItem('news'));
+    const localStorageNews = JSON.parse(localStorage.getItem("news"));
     if (localStorageNews && localStorageNews.length) {
-        setCards(localStorageNews);
-        setSearchStarted(true);
+      setCards(localStorageNews);
+      setSearchStarted(true);
     }
   }, []);
 
@@ -153,10 +153,10 @@ function App() {
 
   React.useEffect(() => {
     if (isSubmitted) {
-      api.search(searchQuery)
-      .then((data) => {
-        const news = (
-          data.articles.map((item) => ({
+      api
+        .search(searchQuery)
+        .then((data) => {
+          const news = data.articles.map((item) => ({
             source: item.source.name,
             title: item.title,
             description: item.description,
@@ -166,17 +166,16 @@ function App() {
             // author: item.author,
             // content: item.content,
             keyword: searchQuery,
-          }))
-        );
-        setCards(news);
-        localStorage.setItem('news', JSON.stringify(news));
-        setIsSubmitted(false);
-        setSearchQuery("");
-        setSearchStarted(true);
-      })
-      .catch((err) => console.log('ошибка поиска'))
+          }));
+          setCards(news);
+          localStorage.setItem("news", JSON.stringify(news));
+          setIsSubmitted(false);
+          setSearchQuery("");
+          setSearchStarted(true);
+        })
+        .catch((err) => console.log("ошибка поиска"));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted, searchQuery]);
 
   const handleSubmit = () => {
@@ -187,7 +186,8 @@ function App() {
 
   // Модальные окна:
 
-  function handleAuthClick() { // при нажатии на Авторизоваться
+  function handleAuthClick() {
+    // при нажатии на Авторизоваться
     setIsOpenLogin(true);
   }
 
@@ -225,21 +225,22 @@ function App() {
 
   function getSavedNews() {
     auth.api
-        .getSavedNews()
-        .then((news) => 
+      .getSavedNews()
+      .then(
+        (news) =>
           // console.log(news)
           setSavedNews(news)
-// date: "2016-09-18T17:34:02.666Z"
-// image: "https://i.pinimg.com/564x/eb/01/78/eb01788546b8c8eab15485970ce0e3b9.jpg"
-// keyword: "статья"
-// link: "http://jj.com"
-// source: "источник"
-// text: "текст"
-// title: "заголовок"
-// _id: "5fe1b4d3fc763d12488892ee"
-        )
-        .catch(err => console.log(`Ошибка getSavedNews: ${err.message}`));
-};
+        // date: "2016-09-18T17:34:02.666Z"
+        // image: "https://i.pinimg.com/564x/eb/01/78/eb01788546b8c8eab15485970ce0e3b9.jpg"
+        // keyword: "статья"
+        // link: "http://jj.com"
+        // source: "источник"
+        // text: "текст"
+        // title: "заголовок"
+        // _id: "5fe1b4d3fc763d12488892ee"
+      )
+      .catch((err) => console.log(`Ошибка getSavedNews: ${err.message}`));
+  }
 
   function handleBtnClick(article) {
     if (!loggedIn) return setIsOpenLogin(true);
@@ -251,7 +252,7 @@ function App() {
       auth.api
         .saveArticle(article)
         .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
-        .catch(err => console.log(`Ошибка handleBtnClick: ${err.message}`));
+        .catch((err) => console.log(`Ошибка handleBtnClick: ${err.message}`));
       return;
     }
     handleDeleteArticle(saved);
@@ -308,7 +309,14 @@ function App() {
                   setSearchQuery={setSearchQuery}
                   isSubmitted={isSubmitted}
                 />
-                <SavedNews name={name} />
+                <SavedNews
+                  isSearchStarted={isSearchStarted}
+                  loggedIn={loggedIn}
+                  isSubmitted={isSubmitted}
+                  keyWord={searchQuery}
+                  onBtnClick={handleBtnClick}
+                  name={name}
+                />
               </ProtectedRoute>
             </Switch>
             <Footer />

@@ -88,6 +88,8 @@
   position: absolute;
   top: 14px;
   right: 14px;
+  max-width: min-content;
+  justify-content: flex-end;
 }
 .card__button-container_main:hover .card__button-info-container {
   display: flex;
@@ -98,20 +100,17 @@
   display: flex;
   font-size: 12px;
   line-height: 14px;
+  box-shadow: -1px 1px 10px rgba(0, 0, 0, 0.205);
 }
 
 .card__button-info-container {
   display: none;
   background-color: #fff;
   border-radius: 10px;
-  min-height: 40px;
   font-family: "Roboto", Arial, sans-serif;
   font-style: normal;
   font-weight: 600;
-  color: #000000;
   margin: 0 5px;
-  max-width: 76%;
-  align-self: flex-end;
 }
 .card__button-info {
   margin: 0 12px;
@@ -125,22 +124,21 @@
   background-position: center;
   border: none;
   height: 40px;
-  width: 40px;
-}
-.card__button:hover {
+  min-width: 40px;
   cursor: pointer;
 }
 .card__button:focus{
   outline: none;
 }
+
 .card__button_add {
   background-image: url(../../images/svg/add-button.svg);
 }
-.card__button card__button_added {
-  background-image: url(../../images/svg/add-button-blue.svg);
-}
 .card__button_add:hover {
   background-image: url(../../images/svg/add-button-black.svg);
+}
+.card__button_added {
+  background-image: url(../../images/svg/add-button-blue.svg);
 }
 .card__button_delete {
   background-image: url(../../images/svg/bin.svg);
@@ -188,13 +186,7 @@
     font-size: 22px;
     line-height: 26px;
   }
-  /* .card__button-container {
-    top: 16px;
-    right: 16px;
-  } */
-  /* .card__button-info-container {
-    margin-right: 5px;
-  } */
+  
   .card__button-container_main:hover .card__button-info-container {
     font-size: 10px;
     line-height: 12px;
@@ -203,8 +195,4 @@
     font-size: 9px;
     line-height: 11px;
   }
-  /* .card__keyword-container {
-    left: 16px;
-    top: 16px;
-  } */
 }
