@@ -241,16 +241,17 @@ function App() {
         .catch(err => console.log(`Ошибка getSavedNews: ${err.message}`));
 };
 
-  function handleArticleSave(article) {
+  function handleBtnClick(article) {
     if (!loggedIn) return setIsOpenLogin(true);
     const saved = savedNews.find(
       (i) => i.publishedAt === article.publishedAt && i.title === article.title
     );
+    // console.log(article);
     if (!saved) {
       auth.api
         .saveArticle(article)
         .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
-        .catch(err => console.log(`Ошибка handleArticleSave: ${err.message}`));
+        .catch(err => console.log(`Ошибка handleBtnClick: ${err.message}`));
       return;
     }
     handleDeleteArticle(saved);
@@ -288,7 +289,7 @@ function App() {
                   loggedIn={loggedIn}
                   isSubmitted={isSubmitted}
                   keyWord={searchQuery}
-                  onBtnClick={handleArticleSave}
+                  onBtnClick={handleBtnClick}
                 />
               </Route>
               <ProtectedRoute
