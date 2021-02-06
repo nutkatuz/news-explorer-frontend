@@ -86,38 +86,38 @@
 .card__button-container {
   display: flex;
   position: absolute;
-  top: 24px;
-  right: 24px;
-}
-.card__button-container_main {
+  top: 14px;
+  right: 14px;
 }
 .card__button-container_main:hover .card__button-info-container {
   display: flex;
   font-size: 10px;
   line-height: 12px;
 }
-.card__button-container_saved-news {
-}
 .card__button-container_saved-news:hover .card__button-info-container {
   display: flex;
   font-size: 12px;
   line-height: 14px;
 }
+
 .card__button-info-container {
   display: none;
-  font-family: "Roboto", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 600;
   background-color: #fff;
   border-radius: 10px;
   min-height: 40px;
-  margin-right: 5px;
+  font-family: "Roboto", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 600;
   color: #000000;
+  margin: 0 5px;
+  max-width: 76%;
+  align-self: flex-end;
 }
 .card__button-info {
   margin: 0 12px;
   align-self: center;
 }
+
 .card__button {
   background-repeat: no-repeat;
   background-color: #fff;
@@ -130,8 +130,14 @@
 .card__button:hover {
   cursor: pointer;
 }
+.card__button:focus{
+  outline: none;
+}
 .card__button_add {
   background-image: url(../../images/svg/add-button.svg);
+}
+.card__button card__button_added {
+  background-image: url(../../images/svg/add-button-blue.svg);
 }
 .card__button_add:hover {
   background-image: url(../../images/svg/add-button-black.svg);
@@ -147,8 +153,8 @@
   position: absolute;
   background-color: #fff;
   border-radius: 10px;
-  left: 24px;
-  top: 24px;
+  left: 14px;
+  top: 14px;
   min-height: 40px;
 }
 .card__keyword {
@@ -182,13 +188,13 @@
     font-size: 22px;
     line-height: 26px;
   }
-  .card__button-container {
+  /* .card__button-container {
     top: 16px;
     right: 16px;
-  }
-  .card__button-info-container {
+  } */
+  /* .card__button-info-container {
     margin-right: 5px;
-  }
+  } */
   .card__button-container_main:hover .card__button-info-container {
     font-size: 10px;
     line-height: 12px;
@@ -197,8 +203,8 @@
     font-size: 9px;
     line-height: 11px;
   }
-  .card__keyword-container {
+  /* .card__keyword-container {
     left: 16px;
     top: 16px;
-  }
+  } */
 }

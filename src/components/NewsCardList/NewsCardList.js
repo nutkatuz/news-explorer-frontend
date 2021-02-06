@@ -6,8 +6,8 @@ import Preloader from "../Preloader/Preloader";
 import noResultImage from "../../images/svg/no-result.svg";
 import "./NewsCardList.css";
 
-function NewsCardList(props) {
-  const { pathname } = useLocation();
+function NewsCardList({isSubmitted, onBtnClick, loggedIn }) {
+    const { pathname } = useLocation();
 
   //количество отрисованных карточек 3
 
@@ -20,17 +20,16 @@ function NewsCardList(props) {
   }
 
   React.useEffect(() => {
-    // setCards({});
     setCurrentRow(0)
-  }, [props.isSubmitted]) 
+  }, [isSubmitted]) 
 
   return (
     <div className="card-list">
       {pathname === "/" && (
-        <h2 className="card-list__header">Результаты поиска</h2>
+        <h2 className="card-list__header">Результаты поиска: {cards.length}</h2>
       )}
 
-      {props.isSubmitted && <Preloader />}
+      {isSubmitted && <Preloader />}
 
       {cards.length 
       ? (
@@ -40,13 +39,13 @@ function NewsCardList(props) {
               <NewsCard
                 key={i}
                 article={card}
-                loggedIn={props.loggedIn}
-                onCardClick={props.onCardClick}
+                loggedIn={loggedIn}
+                onBtnClick={onBtnClick}
               />
             ))}
           </ul>
 
-          {pathname === "/" && (
+          {pathname === "/" && cards.length !== trinityCards.length && (
             <button onClick={handleShowMore} className="card-list__button">
               Показать еще
             </button>
@@ -55,7 +54,7 @@ function NewsCardList(props) {
       ) 
       : (
         <>
-          {pathname === "/" && (
+          {!isSubmitted && pathname === "/" && (
             <section className="no-result">
               <img
                 className="no-result__image"

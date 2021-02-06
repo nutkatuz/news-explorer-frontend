@@ -3,8 +3,7 @@ import { useLocation } from "react-router-dom";
 import { NewsContext } from "../../contexts/NewsContext";
 import "./NewsCard.css";
 
-function NewsCard(props) {
-  const { loggedIn, onCardClick, article } = props;
+function NewsCard({loggedIn, onBtnClick, article}) {
   const { pathname } = useLocation();
   const { savedNews } = useContext(NewsContext);
 
@@ -37,7 +36,8 @@ function NewsCard(props) {
     );
 
   function handleCardButtonClick() {
-    onCardClick(article);
+    onBtnClick(article);
+
   }
 
   // всплывающая подсказка
@@ -66,14 +66,26 @@ function NewsCard(props) {
           <p className="card__button-info">{infoText}</p>
         </div>
 
-        <button
-          onClick={handleCardButtonClick}
-          className={
-            pathname === "/"
-              ? `card__button card__button_add`
-              : `card__button card__button_delete`
-          }
-        />
+        {pathname === "/" && !isSaved && (
+          <div
+            className="card__button card__button_add"
+            onClick={handleCardButtonClick}
+          ></div>
+        )}
+
+        {pathname === "/" && isSaved && (
+          <div
+            className="card__button card__button_added"
+            onClick={handleCardButtonClick}
+          ></div>
+        )}
+
+        {pathname !== "/" && (
+          <div
+            className="card__button card__button_delete"
+            onClick={handleCardButtonClick}
+          ></div>
+        )}
       </div>
 
       <a

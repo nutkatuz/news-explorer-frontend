@@ -1,16 +1,11 @@
 import React from 'react';
-import {useLocation} from 'react-router-dom';
 import myPhoto from '../../images/me.jpg'
 import './About.css';
 // About — презентационный компонент, который показывает информацию об авторе;
 
-function About(props) {
-  const { pathname } = useLocation();
+function About() {
 
   return (
-    <>
-    {pathname === '/' 
-    ?(
     <div className='section'>
       <section className='about'>
         <img className='about__photo' src={myPhoto} alt='Фото' />
@@ -23,10 +18,6 @@ function About(props) {
         </div>
       </section>
     </div>
-    )
-    :('')
-    }
-    </>
   );
 }
 
