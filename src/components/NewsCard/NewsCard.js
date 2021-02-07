@@ -32,7 +32,7 @@ function NewsCard({loggedIn, onBtnClick, article}) {
   const isSaved =
     loggedIn &&
     savedNews.some(
-      (i) => i.publishedAt === article.publishedAt && i.title === article.title
+      (i) => i.publishedAt === article.publishedAt //&& i.title === article.title
     );
 
   function handleCardButtonClick() {
@@ -108,7 +108,3 @@ function NewsCard({loggedIn, onBtnClick, article}) {
 }
 
 export default NewsCard;
-// {
-//   link: url,
-//   image: urlToImage,
-// }

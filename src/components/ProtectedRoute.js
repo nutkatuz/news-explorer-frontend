@@ -17,10 +17,3 @@ const ProtectedRoute = ({ loggedIn, isRedirect, ...props }) => {
 };
 
 export default ProtectedRoute;
-
-// eslint-disable-next-line no-lone-blocks
-{
-  /* <Route path="/my-profile">
-  {!loggedIn ? <Redirect to="/log-in" /> : <UserProfile />}
-</Route>  */
-}

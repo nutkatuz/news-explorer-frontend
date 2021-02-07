@@ -304,7 +304,7 @@
   }
 }
 
-.saved-news{
+.saved-news {
   width: 100%;
 }
 .saved-news__header {
@@ -323,6 +323,7 @@
   font-size: 40px;
   line-height: 1.15;
   max-width: 530px;
+  min-height: fit-content;
   margin: 0 0 30px;
 }
 
@@ -331,9 +332,6 @@
 }
 
 @media screen and (max-width: 760px) {
-  .saved-news{
-    width: 100%;
-  }
   .saved-news__header {
     padding: 24px 40px 32px;
   }
