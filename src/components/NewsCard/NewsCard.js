@@ -28,16 +28,13 @@ function NewsCard({loggedIn, onBtnClick, article}) {
     date.toLocaleString("ru", { year: "numeric" });
 
   //синяя закладка
-
-  const isSaved =
-    loggedIn &&
-    savedNews.some(
-      (i) => i.publishedAt === article.publishedAt //&& i.title === article.title
-    );
+  console.log(article.title)
+  const isSaved = savedNews.some(
+      i => i.title === article.title && i.description === article.description
+  );
 
   function handleCardButtonClick() {
     onBtnClick(article);
-
   }
 
   // всплывающая подсказка

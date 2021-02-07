@@ -106,7 +106,7 @@ function App() {
   function tokenCheck() {
     // для того чтобы не регаться каждый раз
     const token = localStorage.getItem("jwt");
-    console.log("tokenCheck, токен: " + token);
+    // console.log("tokenCheck, токен: " + token);
     if (token) {
       auth
         .getUserInfo(token)
@@ -312,6 +312,7 @@ function App() {
                 <SavedNews
                   loggedIn={loggedIn}
                   onBtnClick={handleBtnClick}
+                  // setSavedNews={setSavedNews}
                 />
               </ProtectedRoute>
             </Switch>
