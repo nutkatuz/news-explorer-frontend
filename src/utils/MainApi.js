@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.tesla.students.nomoredomains.icu';
-export const BASE_URL = 'http://localhost:3001';
+export const BASE_URL = 'https://api.tesla.students.nomoredomains.icu';
+// export const BASE_URL = 'http://localhost:3001';
 
 export const register = (email, password, name) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -133,18 +133,6 @@ class Api {
     })
     .then(this._processingRes)
   }
-
-  // changeLikeCardStatus(_id, isLiked) {
-  //   return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
-  //       method: `${isLiked ? 'DELETE' : 'PUT'}`,
-  //       headers: this._getHeaders(),
-  //       body: JSON.stringify({
-  //         _id
-  //       })
-  //     })
-  //     .then(this._processingRes)
-  // }
-
 }
 
 export const api = new Api({
