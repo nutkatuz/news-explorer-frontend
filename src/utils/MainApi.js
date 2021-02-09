@@ -1,5 +1,5 @@
 export const BASE_URL = 'https://api.tesla.students.nomoredomains.icu';
-// export const BASE_URL = 'http://localhost:3001';
+// export const BASE_URL = 'http://localhost:3002';
 
 export const register = (email, password, name) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -18,7 +18,7 @@ export const register = (email, password, name) => {
     console.log(`${res.status} MainApi reject`)
     return Promise.reject(res.status);
   })
-  .catch(err => console.log(err))
+  .catch(err => console.log(err))//
 };
 
 export const authorize = (email, password) => {

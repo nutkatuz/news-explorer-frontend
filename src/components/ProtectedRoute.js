@@ -6,15 +6,13 @@ import { Route, Redirect } from "react-router-dom";
 const ProtectedRoute = ({ loggedIn, toRedirect, ...props }) => {
 
   React.useEffect(() => {
-    if (!loggedIn){
       toRedirect()
-    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return loggedIn 
   ? <Route {...props} /> 
-  : <Redirect to="./" />;
+  : <Redirect to="/" />;
 };
 
 export default ProtectedRoute;

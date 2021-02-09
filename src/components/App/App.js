@@ -92,6 +92,9 @@ function App() {
         if (err.code === 400) {
           setErrorServerMessage("Попробуйте ещё раз, " + err.message);
         }
+        else if (err.code === 409) {
+          setErrorServerMessage("Такой user уже есть, " + err.message);
+        }
         setErrorServerMessage("Регистрация не выполнена. Измените введенные данные"); // при регистрации не может быть 401
         console.log(err)
       })
@@ -120,6 +123,7 @@ function App() {
           if (res) {
             setLoggedIn(true);
             setName(res.name);
+            setIsOpenLogin(false);
           }
         })
         .catch((err) => {
@@ -175,7 +179,7 @@ function App() {
           setSearchQuery("");
           setSearchStarted(true);
         })
-        .catch((err) => console.log("Ошибка поиска (на сервере)"));
+        .catch((err) => alert("Ошибка поискового запроса"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted, searchQuery]);
@@ -194,10 +198,13 @@ function App() {
     setIsOpenPopupInfo(false);
   }
 
-    // при нажатии на Авторизоваться
+  // при нажатии на Авторизоваться
+
   function handleOpenLogin() {
-    setIsOpenLogin(true);
-    setErrorServerMessage("");
+    if (!loggedIn){
+      setIsOpenLogin(true);
+      setErrorServerMessage("");
+    }
   }
 
   function handleRedirect(evt) {
@@ -217,14 +224,14 @@ function App() {
     }
   }
 
-  // Карточки  //сохранение статеек в лк
+  // Карточки  //сохранение статеек в лк, вначале - новые.
 
   function getSavedNews() {
     auth.api
       .getSavedNews()
       .then(
         (news) =>
-          setSavedNews(news)
+          setSavedNews(news.reverse())
       )
       .catch((err) => setErrorServerMessage(`Ошибка getSavedNews: ${err.message}`));
   }
@@ -285,6 +292,7 @@ function App() {
                 loggedIn={loggedIn}
                 toRedirect={handleOpenLogin}
               >
+              {/* <Route exact path="/saved-news"> */}
                 <Header
                   name={name}
                   loggedIn={loggedIn}
@@ -300,6 +308,7 @@ function App() {
                   loggedIn={loggedIn}
                   onBtnClick={handleBtnClick}
                 />
+              {/* </Route> */}
               </ProtectedRoute>
             </Switch>
             <Footer />
