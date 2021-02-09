@@ -24,7 +24,7 @@ function NewsCardList({isSubmitted, onBtnClick, loggedIn, cards }) {
 
   return (
     <div className="card-list">
-      {pathname === "/" && (
+      {pathname === "/" && cards.length>0 && (
         <h2 className="card-list__header">Результаты поиска: {cards.length}</h2>
       )}
 

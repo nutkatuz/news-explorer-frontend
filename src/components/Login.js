@@ -1,52 +1,30 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm/PopupWithForm";
+import { useFormWithValidation } from "../hooks/useValidation";
 
 function Login(props) {
-  const [data, setData] = useState( {
-    email: '',
-    password: '',
-    name: ''
-  });
+  // Валидация значений инпутов
 
-  function handleChange (e) {
-    const {name, value} = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  }
+  const emailInput = useFormWithValidation();
+  const passwordInput = useFormWithValidation();
+  const isButtonSaveActive = !(emailInput.isValid && passwordInput.isValid);
 
-  function handleSubmit (e) {
+  function handleSubmit(e) {
     e.preventDefault();
-    props.onLogin(data.email, data.password); // в App
+    props.onLogin(emailInput.value, passwordInput.value); // в App
   }
 
-  useEffect(() => {
-    if (data.email && data.password) {
-      setButtonSaveDisabled(false);
-    } else {
-      setButtonSaveDisabled(true);
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [handleChange]);
+  // Ресетим форму
 
   useEffect(() => {
     if (!props.isOpen) {
-      setData({
-        email: '',
-        password: ''
-      });
+      emailInput.setValue("");
+      passwordInput.setValue("");
+      emailInput.setErrorMessage("");
+      passwordInput.setErrorMessage("");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isOpen]);
-
-// допиши про валидацию
-const [errMessageEmail, 
-  // setErrMessageEmail
-] = useState("");
-const [errMessagePassword, 
-  // setErrMessagePassword
-] = useState("");
-const [isButtonSaveDisabled, setButtonSaveDisabled] = useState(false);
 
   return (
     <PopupWithForm
@@ -55,45 +33,52 @@ const [isButtonSaveDisabled, setButtonSaveDisabled] = useState(false);
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      errorServerMessage={props.errorServerMessage}
     >
       <fieldset className="popup__form-auth">
         <label className="popup__label">Email</label>
         <input
           type="email"
-          value={data.email}
-          onChange={handleChange}
+          value={emailInput.value}
+          onChange={emailInput.onChange}
           name="email"
           required
+          // pattern={/^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i}
           placeholder="Введите почту"
           className="popup__input"
-          autoComplete='off'
+          autoComplete="off"
         />
-        <span className="popup__error_visible">{errMessageEmail}</span>
+        <span className="popup__error popup__error_visible">
+          {emailInput.errorMessage}
+        </span>
+
         <label className="popup__label">Пароль</label>
         <input
           type="password"
-          value={data.password}
-          onChange={handleChange}
+          value={passwordInput.value}
+          onChange={passwordInput.onChange}
           name="password"
           required
           placeholder="Введите пароль"
+          minLength="8"
           className="popup__input"
-          autoComplete='off'
+          autoComplete="off"
         />
-        <span className="popup__error_visible">{errMessagePassword}</span>
+        <span className="popup__error popup__error_visible">
+          {passwordInput.errorMessage}
+        </span>
       </fieldset>
-      <span className="popup__server-error_visible">
-        {props.onServerErrorMessage}
-      </span>
+
       <button
         type="submit"
         className={`popup__button-save ${
-          isButtonSaveDisabled && "popup__button-save_disabled"
+          isButtonSaveActive && "popup__button-save_disabled"
         }`}
-        disabled={isButtonSaveDisabled}
+        disabled={isButtonSaveActive}
       >
         Войти
       </button>
+
       <div className="popup__redirect">
         <p className="popup__redirect-paragraph">или</p>
         <button className="popup__redirect-link" onClick={props.redirect}>

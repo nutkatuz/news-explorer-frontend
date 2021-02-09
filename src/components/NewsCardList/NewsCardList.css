@@ -3,6 +3,8 @@
   flex-direction: column;
   background: #f5f6f7;
   padding: 0 104px;
+  min-height: 500px;
+  
 }
 
 .card-list__header {
