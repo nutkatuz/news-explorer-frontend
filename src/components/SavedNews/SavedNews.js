@@ -5,7 +5,7 @@ import { NewsContext } from "../../contexts/NewsContext";
 
 const SavedNews = ({ loggedIn, onBtnClick }) => {
   const { savedNews } = useContext(NewsContext);
-  // setSavedNews(savedNews.reverse())
+  
   return (
       <NewsCardList
         pathname="/saved-news"
