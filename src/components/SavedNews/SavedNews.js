@@ -7,14 +7,12 @@ const SavedNews = ({ loggedIn, onBtnClick }) => {
   const { savedNews } = useContext(NewsContext);
   // setSavedNews(savedNews.reverse())
   return (
-    <>
       <NewsCardList
         pathname="/saved-news"
         loggedIn={loggedIn}
         onBtnClick={onBtnClick}
         cards={savedNews}
       />
-    </>
   );
 };
 
