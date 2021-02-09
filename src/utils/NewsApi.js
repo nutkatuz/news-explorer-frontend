@@ -1,9 +1,11 @@
+import { ONEWEEK } from "./constants";
+
 class Api {
   constructor({ baseUrl, apiKey }) {
     this._baseUrl = baseUrl;
     this._apiKey = apiKey;
     // this._date = new Date(Date.now() - 604800000); Wed Jan 20 2021 02:53:01 GMT+0500 (Екатеринбург, стандартное время) JSON.stringify()
-    this._date = new Date(Date.now() - 604800000).toJSON();
+    this._date = new Date(Date.now() - ONEWEEK ).toJSON();
   }
 
   search(query) {
