@@ -29,6 +29,7 @@ function PopupWithForm(props) {
           className="popup__close-icon"
           onClick={props.onClose}
         ></button>
+        
         <form
           name={props.name}
           onSubmit={props.onSubmit}
@@ -37,7 +38,11 @@ function PopupWithForm(props) {
           noValidate
         >
           <h2 className="popup__title">{props.title}</h2>
+          <span className="popup__server-error_visible">
+            {props.errorServerMessage}
+          </span>
           {props.children}
+          {/* окна логина и регистрации */}
         </form>
       </div>
     </section>

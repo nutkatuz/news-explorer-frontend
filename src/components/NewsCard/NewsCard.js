@@ -28,7 +28,6 @@ function NewsCard({loggedIn, onBtnClick, article}) {
     date.toLocaleString("ru", { year: "numeric" });
 
   //синяя закладка
-  console.log(article.title)
   const isSaved = savedNews.some(
       i => i.title === article.title && i.description === article.description
   );

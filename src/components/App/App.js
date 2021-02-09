@@ -30,6 +30,7 @@ function App() {
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
   const [isOpenPopupInfo, setIsOpenPopupInfo] = useState(false); // InfoTooltip
+  // Ошибки с сервера (валидация)
   const [errorServerMessage, setErrorServerMessage] = useState("");
   // Карточки  //сохранение статеек в лк
   const [savedNews, setSavedNews] = React.useState([]);
@@ -61,11 +62,14 @@ function App() {
       })
       .catch((err) => {
         if (err === 400) {
-          console.log("Не передано одно из полей");
+          setErrorServerMessage("Не передано одно из полей");
         } else if (err === 401) {
-          console.log("Неправильные почта или пароль");
+          setErrorServerMessage("Неправильные почта или пароль");
         }
-        console.log("Ошибка логина: " + err);
+        // else if (!err) {
+        //   setErrorServerMessage("Нет соединения");
+        // }
+        setErrorServerMessage("Не удалось осуществить вход O_o");
         setLoggedIn(false);
       })
       .finally(() => {
@@ -86,9 +90,10 @@ function App() {
       })
       .catch((err) => {
         if (err.code === 400) {
-          console.log(err.message);
+          setErrorServerMessage("Попробуйте ещё раз, " + err.message);
         }
-        console.log("Ошибка регистрации: " + err); // при регистрации не может быть 401
+        setErrorServerMessage("Регистрация не выполнена. Измените введенные данные"); // при регистрации не может быть 401
+        console.log(err)
       })
       .finally(() => {
         setIsLoading(false);
@@ -138,10 +143,7 @@ function App() {
     getSavedNews(); // загрузка сохраненок
   }, [loggedIn]);
 
-  // Загрузка изначальных карточек
-  //Если пользователь закрыл вкладку, а после — вернулся на сайт, нужно достать данные из локального хранилища при монтировании компонента App. Выстройте работу с локальным хранилищем и стейт-переменной setCards в правильном порядке.
-
-  React.useEffect(() => {
+  useEffect(() => {
     const localStorageNews = JSON.parse(localStorage.getItem("news"));
     if (localStorageNews && localStorageNews.length) {
       setCards(localStorageNews);
@@ -151,7 +153,7 @@ function App() {
 
   // Поиск
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubmitted) {
       api
         .search(searchQuery)
@@ -173,7 +175,7 @@ function App() {
           setSearchQuery("");
           setSearchStarted(true);
         })
-        .catch((err) => console.log("ошибка поиска"));
+        .catch((err) => console.log("Ошибка поиска (на сервере)"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitted, searchQuery]);
@@ -186,17 +188,13 @@ function App() {
 
   // Модальные окна:
 
-  function handleAuthClick() {
-    // при нажатии на Авторизоваться
-    setIsOpenLogin(true);
-  }
-
   function closeAllPopups() {
     setIsOpenLogin(false);
     setIsOpenRegister(false);
     setIsOpenPopupInfo(false);
   }
 
+    // при нажатии на Авторизоваться
   function handleOpenLogin() {
     setIsOpenLogin(true);
     setErrorServerMessage("");
@@ -205,9 +203,8 @@ function App() {
   function handleRedirect(evt) {
     evt.preventDefault();
     if (isOpenPopupInfo) {
-      setIsOpenLogin(true);
       setIsOpenPopupInfo(false);
-      setErrorServerMessage("");
+      handleOpenLogin();
     } else {
       if (isOpenLogin) {
         setIsOpenLogin(false);
@@ -215,8 +212,7 @@ function App() {
         setErrorServerMessage("");
       } else {
         setIsOpenRegister(false);
-        setIsOpenLogin(true);
-        setErrorServerMessage("");
+        handleOpenLogin();
       }
     }
   }
@@ -228,22 +224,13 @@ function App() {
       .getSavedNews()
       .then(
         (news) =>
-          // console.log(news)
           setSavedNews(news)
-        // date: "2016-09-18T17:34:02.666Z"
-        // image: "https://i.pinimg.com/564x/eb/01/78/eb01788546b8c8eab15485970ce0e3b9.jpg"
-        // keyword: "статья"
-        // link: "http://jj.com"
-        // source: "источник"
-        // text: "текст"
-        // title: "заголовок"
-        // _id: "5fe1b4d3fc763d12488892ee"
       )
-      .catch((err) => console.log(`Ошибка getSavedNews: ${err.message}`));
+      .catch((err) => setErrorServerMessage(`Ошибка getSavedNews: ${err.message}`));
   }
 
   function handleBtnClick(article) {
-    if (!loggedIn) return setIsOpenLogin(true);
+    if (!loggedIn) return handleOpenLogin();
     const saved = savedNews.find(
       (i) => i.publishedAt === article.publishedAt && i.title === article.title
     );
@@ -252,7 +239,7 @@ function App() {
       auth.api
         .saveArticle(article)
         .then((newArticle) => setSavedNews([newArticle, ...savedNews]))
-        .catch((err) => console.log(`Ошибка handleBtnClick: ${err.message}`));
+        .catch((err) => setErrorServerMessage(`Ошибка handleBtnClick: ${err.message}`));
       return;
     }
     handleDeleteArticle(saved);
@@ -264,7 +251,7 @@ function App() {
       .then(() =>
         setSavedNews(savedNews.filter((item) => item._id !== article._id))
       )
-      .catch((err) => console.log(`Ошибка handleDeleteArticle: ${err}`));
+      .catch((err) => setErrorServerMessage(`Ошибка handleDeleteArticle: ${err}`));
   }
 
   return (
@@ -277,7 +264,7 @@ function App() {
                 <Header
                   name={name}
                   loggedIn={loggedIn}
-                  onLogIn={handleAuthClick}
+                  onLogIn={handleOpenLogin}
                   onOpenLogin={handleOpenLogin}
                   onSignOut={handleLogOut}
                   handleSubmit={handleSubmit}
@@ -296,12 +283,12 @@ function App() {
               <ProtectedRoute
                 path="/saved-news"
                 loggedIn={loggedIn}
-                isRedirect={handleAuthClick}
+                toRedirect={handleOpenLogin}
               >
                 <Header
                   name={name}
                   loggedIn={loggedIn}
-                  onLogIn={handleAuthClick}
+                  onLogIn={handleOpenLogin}
                   onOpenLogin={handleOpenLogin}
                   onSignOut={handleLogOut}
                   handleSubmit={handleSubmit}
@@ -312,7 +299,6 @@ function App() {
                 <SavedNews
                   loggedIn={loggedIn}
                   onBtnClick={handleBtnClick}
-                  // setSavedNews={setSavedNews}
                 />
               </ProtectedRoute>
             </Switch>
@@ -321,18 +307,20 @@ function App() {
             <Login
               isOpen={isOpenLogin}
               onClose={closeAllPopups}
-              onServerErrorMessage={errorServerMessage}
               redirect={handleRedirect}
               onLogin={handleLogin}
               loading={isLoading}
+              // setErrorServerMessage={setErrorServerMessage}
+              errorServerMessage={errorServerMessage}
             />
             <Register
               isOpen={isOpenRegister}
               onClose={closeAllPopups}
-              onServerErrorMessage={errorServerMessage}
               redirect={handleRedirect}
               onRegister={handleRegister}
               loading={isLoading}
+              // setErrorServerMessage={setErrorServerMessage}
+              errorServerMessage={errorServerMessage}
             />
             <InfoTooltip
               isOpen={isOpenPopupInfo}

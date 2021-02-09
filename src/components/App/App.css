@@ -5,7 +5,7 @@
   justify-content: space-between; 
   flex-direction: column;
   min-height: 100vh;
-  display: flex;
+  /* display: flex; */
   flex-grow: 3;
   flex-direction: column;
   min-height: 100vh;
@@ -38,7 +38,4 @@
   .section {
     max-width: calc(100% - 16px*2);
   }
-  /* .app {
-    padding: 56px 0 0;
-  } */
 }
