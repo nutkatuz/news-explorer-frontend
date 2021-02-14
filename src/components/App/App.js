@@ -114,7 +114,7 @@ function App() {
   function tokenCheck() {
     // для того чтобы не регаться каждый раз
     const token = localStorage.getItem("jwt");
-    // console.log("tokenCheck, токен: " + token);
+    console.log("tokenCheck, токен: " + token);
     if (token) {
       auth
         .getUserInfo(token)
@@ -127,17 +127,19 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log("Ошибка проверки tokenCheck: " + err);
+          console.log("Сервер не узнал токен при tokenCheck: " + err);
           setLoggedIn(false);
           setName("");
         });
     } else {
-      console.log("нет токена на tokenCheck: " + token);
+      console.log("Нет токена при tokenCheck: " + token);
     }
   }
 
   useEffect(() => {
+    if (!loggedIn) {
     tokenCheck();
+  }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [localStorage]);
 
@@ -201,10 +203,8 @@ function App() {
   // при нажатии на Авторизоваться
 
   function handleOpenLogin() {
-    if (!loggedIn){
       setIsOpenLogin(true);
       setErrorServerMessage("");
-    }
   }
 
   function handleRedirect(evt) {
@@ -290,9 +290,8 @@ function App() {
               <ProtectedRoute
                 path="/saved-news"
                 loggedIn={loggedIn}
-                toRedirect={handleOpenLogin}
+                handleOpenLogin={handleOpenLogin}
               >
-              {/* <Route exact path="/saved-news"> */}
                 <Header
                   name={name}
                   loggedIn={loggedIn}
@@ -308,7 +307,6 @@ function App() {
                   loggedIn={loggedIn}
                   onBtnClick={handleBtnClick}
                 />
-              {/* </Route> */}
               </ProtectedRoute>
             </Switch>
             <Footer />
