@@ -6,7 +6,7 @@ import noResultImage from "../../images/svg/no-result.svg";
 import "./NewsCardList.css";
 import { CARDSINROW } from "../../utils/constants";
 
-function NewsCardList({isSubmitted, onBtnClick, loggedIn, cards }) {
+function NewsCardList({ isSubmitted, onBtnClick, loggedIn, cards }) {
   
   const { pathname } = useLocation();
 

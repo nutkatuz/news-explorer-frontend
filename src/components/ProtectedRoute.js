@@ -1,12 +1,16 @@
 import React from "react";
-import { Route, Redirect } from "react-router-dom";
+import { Route, useLocation, Redirect } from "react-router-dom";
 // HOC особый компонент!
 // Спросить Лизу почему при перезагрузке этой страницы всё летит к чёрту
 
-const ProtectedRoute = ({ loggedIn, toRedirect, ...props }) => {
+const ProtectedRoute = ({ loggedIn, handleOpenLogin, ...props }) => {
+  
+  const { pathname } = useLocation();
 
   React.useEffect(() => {
-      toRedirect()
+    if (!loggedIn && pathname === "/saved-news") {
+      handleOpenLogin()
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

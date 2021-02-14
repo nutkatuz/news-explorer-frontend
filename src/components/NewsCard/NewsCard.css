@@ -71,12 +71,13 @@
 }
 .card__sourse {
   margin: 10px 0 0;
+  align-self: flex-end;
   font-family: "Roboto Slab", Arial, sans-serif;
   font-style: normal;
   font-weight: bold;
   font-size: 16px;
   line-height: 20px;
-  letter-spacing: 0.4px;
+  letter-spacing: .4px;
   text-transform: uppercase;
   overflow: hidden;
   text-overflow: ellipsis;
