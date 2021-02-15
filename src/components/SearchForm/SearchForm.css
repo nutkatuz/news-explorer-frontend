@@ -45,6 +45,8 @@
   font-size: 16px;
   line-height: 22px;
   border-radius: 1000px;
+  /* z-index: 1; */
+  /* это для фокуса инпута */
 }
 .search-form__input {
   width: 100%;
@@ -66,11 +68,11 @@
   display: block;
   line-height: 30px;
   width: calc(100%);
-  z-index: -1;
   border-radius: 100px;
+  z-index: -1;
 }
 .search-form__input:focus ~ .search-form__label {
-  box-shadow: 0px 0px 10px rgba(151, 239, 255, 0.925);
+  border: 4px solid #2f71e5;
 }
 .search-form__search-button {
   width: 168px;
