@@ -106,7 +106,7 @@
   box-shadow: 0 0 5px #fff;
 }
 .navbar__auth-btn:focus {
-  box-shadow: 0 0 10px rgb(255, 217, 0);
+  box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 .navbar__name {
   max-width: 100%;
