@@ -105,6 +105,9 @@
 .navbar__auth-btn:hover {
   box-shadow: 0 0 5px #fff;
 }
+.navbar__auth-btn:focus {
+  box-shadow: 0 0 10px rgb(255, 217, 0);
+}
 .navbar__name {
   max-width: 100%;
   margin: 0 0 0 auto;

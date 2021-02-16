@@ -1,9 +1,8 @@
 import React from "react";
 import { Route, useLocation, Redirect } from "react-router-dom";
 // HOC особый компонент!
-// Спросить Лизу почему при перезагрузке этой страницы всё летит к чёрту
 
-const ProtectedRoute = ({ loggedIn, handleOpenLogin, ...props }) => {
+const ProtectedRoute = ({ isLoading, loggedIn, handleOpenLogin, ...props }) => {
   
   const { pathname } = useLocation();
 
@@ -14,7 +13,7 @@ const ProtectedRoute = ({ loggedIn, handleOpenLogin, ...props }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return loggedIn 
+  return isLoading || loggedIn
   ? <Route {...props} /> 
   : <Redirect to="/" />;
 };

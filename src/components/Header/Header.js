@@ -118,7 +118,7 @@ function Header(props) {
               ""
             )}
             {props.loggedIn ? (
-              <div onClick={props.onSignOut} className="navbar__auth-btn">
+              <button onClick={props.onSignOut} className="navbar__auth-btn">
                 <p className="navbar__name">{props.name}</p>
                 <div
                   className={
@@ -130,11 +130,12 @@ function Header(props) {
                         }`
                   }
                 />
-              </div>
+              </button>
             ) : (
-              <div onClick={props.onLogIn} className="navbar__auth-btn">
+              <button onClick={props.onLogIn} className="navbar__auth-btn">
                 <p className="navbar__auth-name">Авторизоваться</p>
-              </div>
+              </button>
+              
             )}
           </nav>
         </header>
