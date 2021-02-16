@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { NewsContext } from "../../contexts/NewsContext";
 import Header from "../Header/Header";
@@ -22,7 +22,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   // Поиск
   const [cards, setCards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); //не готов
+  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSearchStarted, setSearchStarted] = useState(false);
@@ -114,8 +114,8 @@ function App() {
   function tokenCheck() {
     // для того чтобы не регаться каждый раз
     const token = localStorage.getItem("jwt");
-    console.log("tokenCheck, токен: " + token);
     if (token) {
+      setIsLoading(true)
       auth
         .getUserInfo(token)
         .then((res) => {
@@ -130,8 +130,12 @@ function App() {
           console.log("Сервер не узнал токен при tokenCheck: " + err);
           setLoggedIn(false);
           setName("");
-        });
+        })
+        .finally(()=>(
+          setIsLoading(false)
+        ));
     } else {
+      setIsLoading(false)
       console.log("Нет токена при tokenCheck: " + token);
     }
   }
@@ -141,7 +145,7 @@ function App() {
     tokenCheck();
   }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localStorage]);
+  }, []);
 
   useEffect(() => {
     if (!loggedIn) return;
@@ -262,7 +266,6 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
       <CurrentUserContext.Provider value={currentUser}>
         <NewsContext.Provider value={{ cards, savedNews }}>
           <div className="app">
@@ -291,6 +294,7 @@ function App() {
                 path="/saved-news"
                 loggedIn={loggedIn}
                 handleOpenLogin={handleOpenLogin}
+                isLoading = {isLoading}
               >
                 <Header
                   name={name}
@@ -337,7 +341,6 @@ function App() {
           </div>
         </NewsContext.Provider>
       </CurrentUserContext.Provider>
-    </BrowserRouter>
   );
 }
 
