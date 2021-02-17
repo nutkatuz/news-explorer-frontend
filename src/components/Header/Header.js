@@ -80,7 +80,7 @@ function Header(props) {
               : `${isActive ? "section header" : "section header header_black"}`
           }
         >
-          <p className="header__logo">
+          <p className="header__logo" >
             NewsExplorer
             <button
               aria-label="Мобильное меню"
@@ -135,7 +135,6 @@ function Header(props) {
               <button onClick={props.onLogIn} className="navbar__auth-btn">
                 <p className="navbar__auth-name">Авторизоваться</p>
               </button>
-              
             )}
           </nav>
         </header>
@@ -165,8 +164,6 @@ function Header(props) {
             <p className="saved-news__keywords">
               По ключевым словам:{" "}
               <span className="saved-news__span">{keywordsForJSX}</span>
-              {/* {" "}и{" "}
-              <span className="saved-news__span">2-м другим</span> */}
             </p>
           )}
         </section>

@@ -13,6 +13,7 @@ import api from "../../utils/NewsApi";
 import * as auth from "../../utils/MainApi";
 import "./App.css";
 import ProtectedRoute from "../ProtectedRoute";
+import PreloaderXXL from "../PreloaderXXL/PreloaderXXL";
 
 function App() {
   // Хуки состояния at the top
@@ -21,11 +22,11 @@ function App() {
   const [name, setName] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);
   // Поиск
+  const [isSearchStarted, setSearchStarted] = useState(false); // NewsList
+  const [isSubmitted, setIsSubmitted] = useState(false); // Preloader
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSearchStarted, setSearchStarted] = useState(false);
   // Модальные окна:
   const [isOpenLogin, setIsOpenLogin] = useState(false);
   const [isOpenRegister, setIsOpenRegister] = useState(false);
@@ -66,9 +67,6 @@ function App() {
         } else if (err === 401) {
           setErrorServerMessage("Неправильные почта или пароль");
         }
-        // else if (!err) {
-        //   setErrorServerMessage("Нет соединения");
-        // }
         setErrorServerMessage("Не удалось осуществить вход O_o");
         setLoggedIn(false);
       })
@@ -106,8 +104,7 @@ function App() {
   function handleLogOut() {
     setLoggedIn(false);
     setName(null);
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("news");
+    localStorage.clear();
     setSearchStarted(false);
   }
 
@@ -193,7 +190,7 @@ function App() {
   const handleSubmit = () => {
     setCards([]);
     setIsSubmitted(true);
-    // setSearchStarted(true);
+    setSearchStarted(true);
   };
 
   // Модальные окна:
@@ -245,7 +242,6 @@ function App() {
     const saved = savedNews.find(
       (i) => i.publishedAt === article.publishedAt && i.title === article.title
     );
-    // console.log(article);
     if (!saved) {
       auth.api
         .saveArticle(article)
@@ -265,6 +261,10 @@ function App() {
       .catch((err) => setErrorServerMessage(`Ошибка handleDeleteArticle: ${err}`));
   }
 
+  if (isLoading) {
+    return <PreloaderXXL/>
+  }
+
   return (
       <CurrentUserContext.Provider value={currentUser}>
         <NewsContext.Provider value={{ cards, savedNews }}>
@@ -275,7 +275,6 @@ function App() {
                   name={name}
                   loggedIn={loggedIn}
                   onLogIn={handleOpenLogin}
-                  onOpenLogin={handleOpenLogin}
                   onSignOut={handleLogOut}
                   handleSubmit={handleSubmit}
                   searchQuery={searchQuery}
@@ -300,7 +299,6 @@ function App() {
                   name={name}
                   loggedIn={loggedIn}
                   onLogIn={handleOpenLogin}
-                  onOpenLogin={handleOpenLogin}
                   onSignOut={handleLogOut}
                   handleSubmit={handleSubmit}
                   searchQuery={searchQuery}
@@ -318,9 +316,9 @@ function App() {
             <Login
               isOpen={isOpenLogin}
               onClose={closeAllPopups}
-              redirect={handleRedirect}
               onLogin={handleLogin}
               loading={isLoading}
+              redirect={handleRedirect}
               // setErrorServerMessage={setErrorServerMessage}
               errorServerMessage={errorServerMessage}
             />

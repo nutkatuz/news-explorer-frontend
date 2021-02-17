@@ -13,7 +13,7 @@ function NewsCardList({ isSubmitted, onBtnClick, loggedIn, cards }) {
   //количество отрисованных карточек
 
   const [currentRow, setCurrentRow] = React.useState(0);
-  const trinityCards = cards.slice(0, (currentRow + 1) * CARDSINROW);
+  const showedCards = cards.slice(0, (currentRow + 1) * CARDSINROW);
   
   function handleShowMore() {
     setCurrentRow(currentRow + 1);
@@ -35,7 +35,7 @@ function NewsCardList({ isSubmitted, onBtnClick, loggedIn, cards }) {
       ? (
         <>
           <ul className="card-list__container">
-            {trinityCards.map((card, i) => (
+            {showedCards.map((card, i) => (
               <NewsCard
                 key={i}
                 article={card}
@@ -47,7 +47,7 @@ function NewsCardList({ isSubmitted, onBtnClick, loggedIn, cards }) {
 
           {
           // pathname === "/" &&  -сохраненки показывать тоже с кнопкой
-          cards.length !== trinityCards.length && (
+          cards.length !== showedCards.length && (
             <button onClick={handleShowMore} className="card-list__button">
               Показать еще
             </button>
