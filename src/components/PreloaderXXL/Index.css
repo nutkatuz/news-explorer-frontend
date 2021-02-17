@@ -1,0 +1,59 @@
+.preloaderXXL {
+  height: 100vh;
+  width: 100vw;
+  z-index: 100;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloaderXXL__text{
+  position: relative;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 38px;
+  text-align: center;
+  width: 100%;
+  color: #B6BCBF;
+  /* animation: gradient 1.5s linear infinite; */
+  transition: all;
+}
+
+.dots {
+  width: 30px;
+  position: absolute;
+  top: 0;
+  left: 59%;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  animation: dots 1.5s linear infinite;
+  transition: all;
+}
+
+@keyframes dots {
+  from {
+    width: 0px}
+  to {
+    width: 30px}
+}	
+/* 
+@keyframes gradient {
+  0% {
+    background: linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+  50% {
+    background: linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+  100% {
+    background: linear-gradient(45deg, #0B2349 33%, #0D61BC 66%, #8AA9D6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  }
+}	
+ */
