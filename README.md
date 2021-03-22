@@ -1,5 +1,8 @@
-# [React App "NewsExplorer"](https://tesla.students.nomoredomains.icu)
+# [React App "NewsExplorer"](https://revidovich.github.io/news-explorer-frontend/)
 
-Если предыдущее приложение было что-то по типу Инстаграмма, то данное приложение - это новостной портал, смесь поисковика и reddit.com  
+В общем, облако у меня отключили за неуплату, машина https://tesla.students.nomoredomains.icu не работает.
+Задеплоила на GhP
+Новостной портал, смесь поисковика и reddit.com  
+
 
 <!-- ### Планы: -->
